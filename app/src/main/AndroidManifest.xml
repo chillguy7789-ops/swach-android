@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.swach.app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Network permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Vibration for haptic feedback -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- Notifications for airing alerts -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Keep screen on during video playback -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/sym_def_app_icon"
         android:label="Swach"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Swach"
         android:hardwareAccelerated="true"
