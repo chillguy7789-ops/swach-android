@@ -74,8 +74,8 @@ class MainActivity : AppCompatActivity() {
             overScrollMode = View.OVER_SCROLL_NEVER
             isScrollbarFadingEnabled = true
             scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-            verticalScrollBarEnabled = false
-            horizontalScrollBarEnabled = false
+            isVerticalScrollBarEnabled = false
+            isHorizontalScrollBarEnabled = false
             isHapticFeedbackEnabled = true
             isSoundEffectsEnabled = false
             isLongClickable = false
