@@ -38,6 +38,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+html{background:var(--bg0);margin:0;padding:0;}
 body{
   font-family:'Sora',sans-serif;
   background:var(--bg0);
@@ -47,6 +48,8 @@ body{
   -webkit-tap-highlight-color:transparent;
   overscroll-behavior:none;
   -webkit-font-smoothing:antialiased;
+  margin:0;padding:0;
+  border:none;outline:none;
 }
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -3197,12 +3200,7 @@ function renderMyList(m){
       </div>
     </div>
     <div class="sort-bar">
-      ${[['title','A-Z'],['score','Score'],['progress','Progress'],['status','Status'],['dateAdded','Date Added']].map(([k,l])=>`
-        <div class="sort-opt ${_myListSort===k?'on':''}" onclick="_myListSort='${k}';applyMyListFilter()">${l}</div>`).join('')}
-      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0">
-        <button class="btn-s" id="ml-view-toggle" onclick="toggleMyListView()" style="font-size:11px;padding:5px 10px">${_myListView==='grid'?'List':'Grid'}</button>
-        <button class="btn-s" id="ml-bulk-toggle" onclick="toggleMyListBulk()" style="font-size:11px;padding:5px 10px">Select</button>
-      </div>
+      <button class="btn-s" id="ml-bulk-toggle" onclick="toggleMyListBulk()" style="font-size:11px;padding:5px 12px;margin-left:auto">Select</button>
     </div>
     <div id="ml-bulk-bar" class="bulk-bar" style="display:none;padding:0 14px">
       <span class="bulk-count" id="ml-bulk-count">0 selected</span>
@@ -3247,19 +3245,30 @@ function renderMyList(m){
 
 function openLibFilterSheet(){
   const tabs=[['all','All'],['CURRENT','Watching'],['COMPLETED','Completed'],['PLANNING','Planning'],['PAUSED','On Hold'],['DROPPED','Dropped']];
+  const sorts=[['title','A-Z'],['score','Score'],['progress','Progress'],['status','Status'],['dateAdded','Date Added']];
   const items=window._mlItems||[];
   const mr=document.getElementById('modal-root');
   mr.innerHTML=`<div class="modal-bg" onclick="closeModal(event)">
-    <div class="modal" style="max-width:360px">
-      <div class="modal-title" style="font-size:16px;margin-bottom:16px">Filter Library</div>
-      <div style="display:flex;flex-direction:column;gap:4px">
+    <div class="modal" style="max-width:380px;padding:20px 16px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Filter by Status</div>
+      <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:20px">
         ${tabs.map(([key,label])=>{
           const cnt=key==='all'?items.length:items.filter(i=>i.status===key).length;
-          return `<button onclick="switchMyListTab('${key}');closeModal()" style="padding:13px 16px;background:${_myListTab===key?'rgba(127,140,255,.15)':'transparent'};border:1px solid ${_myListTab===key?'var(--accent)':'var(--border)'};border-radius:10px;color:${_myListTab===key?'var(--accent2)':'var(--text0)'};font-size:14px;font-weight:${_myListTab===key?'600':'400'};cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;font-family:'Sora',sans-serif">
-            ${label}
-            <span style="font-size:12px;color:var(--text2)">${cnt}</span>
+          const active=_myListTab===key;
+          return `<button onclick="switchMyListTab('${key}');closeModal()" style="padding:12px 14px;background:${active?'rgba(127,140,255,.12)':'transparent'};border:none;border-radius:8px;color:${active?'var(--accent2)':'var(--text0)'};font-size:14px;font-weight:${active?'600':'400'};cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;font-family:'Sora',sans-serif;-webkit-tap-highlight-color:transparent;">
+            <span>${active?'✓ ':' '}${label}</span>
+            <span style="font-size:12px;color:var(--text2);background:var(--bg3);padding:2px 8px;border-radius:10px">${cnt}</span>
           </button>`;
         }).join('')}
+      </div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-bottom:10px">Sort by</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">
+        ${sorts.map(([k,l])=>`<button onclick="_myListSort='${k}';applyMyListFilter();closeModal()" style="padding:7px 14px;border-radius:20px;border:1px solid ${_myListSort===k?'var(--accent)':'var(--border)'};background:${_myListSort===k?'rgba(127,140,255,.12)':'transparent'};color:${_myListSort===k?'var(--accent2)':'var(--text1)'};font-size:12px;font-weight:500;cursor:pointer;font-family:'Sora',sans-serif;">${l}</button>`).join('')}
+      </div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-bottom:10px">View</div>
+      <div style="display:flex;gap:6px">
+        <button onclick="_myListView='grid';toggleMyListView&&toggleMyListView();closeModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid ${_myListView!=='list'?'var(--accent)':'var(--border)'};background:${_myListView!=='list'?'rgba(127,140,255,.12)':'transparent'};color:${_myListView!=='list'?'var(--accent2)':'var(--text1)'};font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;">Grid</button>
+        <button onclick="_myListView='list';toggleMyListView&&toggleMyListView();closeModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid ${_myListView==='list'?'var(--accent)':'var(--border)'};background:${_myListView==='list'?'rgba(127,140,255,.12)':'transparent'};color:${_myListView==='list'?'var(--accent2)':'var(--text1)'};font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;">List</button>
       </div>
     </div>
   </div>`;
@@ -6338,10 +6347,9 @@ function openImport(){
       <div class="import-section">
         <h3>MyAnimeList (XML)</h3>
         <p>Export from MAL: Profile → Export Anime List, then upload the XML here.</p>
-        <label style="display:block;width:100%;padding:16px;background:var(--bg2);border:1px dashed rgba(255,255,255,.2);border-radius:10px;text-align:center;cursor:pointer;font-size:13px;color:var(--text1);">
+        <button onclick="_nativePickMalXml()" style="display:block;width:100%;padding:16px;background:var(--bg2);border:1px dashed rgba(255,255,255,.2);border-radius:10px;text-align:center;cursor:pointer;font-size:13px;color:var(--text1);font-family:'Sora',sans-serif;">
           Tap to select MAL XML file
-          <input type="file" accept=".xml,application/xml,text/xml" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" onchange="if(this.files[0])parseMalXML(this.files[0])">
-        </label>
+        </button>
         <div id="mal-status" style="font-size:12px;color:var(--text2);margin-top:8px"></div>
       </div>
 
@@ -6450,6 +6458,50 @@ function _triggerMalXMLPicker(){
   if(inp){inp.click();}
   else{const f=document.createElement('input');f.type='file';f.accept='.xml,text/xml';f.onchange=e=>{if(e.target.files[0])parseMalXML(e.target.files[0]);};document.body.appendChild(f);f.click();setTimeout(()=>f.remove(),60000);}
 }
+// Native Android XML file picker — called from Kotlin with XML string content
+window._onNativeXmlPicked = function(xmlContent) {
+  if(!xmlContent) { return; }
+  // Create a File-like blob and pass to parseMalXML
+  try {
+    const blob = new Blob([xmlContent], {type: 'text/xml'});
+    const file = new File([blob], 'animelist.xml', {type: 'text/xml'});
+    parseMalXML(file);
+  } catch(e) {
+    // Fallback: parse directly from string
+    _parseMalXMLFromString(xmlContent);
+  }
+};
+
+function _nativePickMalXml() {
+  if(window.AndroidBridge && window.AndroidBridge.pickXmlFile) {
+    window.AndroidBridge.pickXmlFile();
+  } else {
+    // Fallback for browser testing
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.xml,text/xml,application/xml';
+    inp.onchange = e => { if(e.target.files[0]) parseMalXML(e.target.files[0]); };
+    document.body.appendChild(inp);
+    inp.click();
+    setTimeout(() => inp.remove(), 60000);
+  }
+}
+
+function _parseMalXMLFromString(xmlString) {
+  const status = document.getElementById('mal-status');
+  if(status) status.textContent = 'Parsing...';
+  try {
+    const xml = new DOMParser().parseFromString(xmlString, 'text/xml');
+    const animes = Array.from(xml.querySelectorAll('anime'));
+    if(!animes.length) { if(status) status.textContent = 'No anime found in file.'; return; }
+    // Reuse parseMalXML logic by creating a fake file
+    const blob = new Blob([xmlString], {type:'text/xml'});
+    parseMalXML(new File([blob], 'list.xml', {type:'text/xml'}));
+  } catch(e) {
+    if(status) status.textContent = 'Parse error: ' + e.message;
+  }
+}
+
 function parseMalXML(file){
   if(!file){return;}
   const status=document.getElementById('mal-status');
@@ -7050,10 +7102,7 @@ function _settingsOpenImport(){
       <button class="btn-s" onclick="openImport()" style="justify-content:center;padding:11px;font-size:13px">Import List</button>
       <button class="btn-p" onclick="closeModal();exportAniListXML()" style="justify-content:center;padding:11px;font-size:13px">Export for AniList</button>
       <button class="btn-s" onclick="exportList()" style="justify-content:center;padding:11px;font-size:13px">Backup JSON</button>
-      <label class="btn-s" style="justify-content:center;padding:11px;font-size:13px;cursor:pointer;position:relative">
-        Import MAL XML
-        <input type="file" accept=".xml,application/xml,text/xml" style="position:absolute;inset:0;opacity:0;cursor:pointer;" onchange="if(this.files[0])parseMalXML(this.files[0])">
-      </label>
+      <button class="btn-s" onclick="_nativePickMalXml()" style="justify-content:center;padding:11px;font-size:13px">Import MAL XML</button>
     </div>`);
 }
 
