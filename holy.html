@@ -16,25 +16,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg0: #000000;
-  --bg1: #0a0a0a;
-  --bg2: #111111;
-  --bg3: #191919;
-  --bg4: #222222;
-  --accent: #ffffff;
-  --accent2: #cccccc;
-  --accent3: #999999;
-  --glow: rgba(255,255,255,0.08);
-  --glow2: rgba(255,255,255,0.04);
-  --text0: #eeecff;
-  --text1: #a8a4c0;
-  --text2: #58566a;
-  --gold: #f4b942;
-  --green: #34d399;
-  --red: #f87171;
-  --border: rgba(255,255,255,0.07);
-  --r: 10px;
-  --rs: 7px;
+  --bg0: #121212;
+  --bg1: #1c1c1c;
+  --bg2: #1e1e1e;
+  --bg3: #2a2a2a;
+  --bg4: #313131;
+  --accent: #7f8cff;
+  --accent2: #a5adff;
+  --accent3: #666;
+  --glow: rgba(127,140,255,0.15);
+  --glow2: rgba(127,140,255,0.07);
+  --text0: #e6e1e5;
+  --text1: #938f99;
+  --text2: #49454f;
+  --gold: #f5c518;
+  --green: #22c55e;
+  --red: #cf6679;
+  --border: rgba(255,255,255,0.08);
+  --r: 12px;
+  --rs: 8px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -44,28 +44,30 @@ body{
   color:var(--text0);
   min-height:100vh;
   overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  overscroll-behavior:none;
+  -webkit-font-smoothing:antialiased;
 }
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg0)}
-::-webkit-scrollbar-thumb{background:#333333;border-radius:3px}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:2px}
 
 /* ─── NAV ─── */
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:56px;padding:0 18px;
-  display:flex;align-items:center;gap:16px;
-  background:rgba(0,0,0,0.95);
-  backdrop-filter:blur(24px) saturate(1.5);
-  border-bottom:1px solid var(--border);
+  height:56px;padding:0 8px 0 16px;
+  display:flex;align-items:center;gap:8px;
+  background:#1c1c1c;
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 .logo{
-  font-family:'Outfit',sans-serif;font-weight:900;font-size:19px;
+  font-family:'Outfit',sans-serif;font-weight:900;font-size:21px;
   color:#ffffff;
   cursor:pointer;letter-spacing:-0.5px;white-space:nowrap;flex-shrink:0;
 }
 .nav-links{display:flex;gap:2px;align-items:center}
 .nl{
-  padding:5px 11px;border-radius:7px;cursor:pointer;
+  padding:6px 13px;border-radius:8px;cursor:pointer;
   font-size:13px;font-weight:500;color:var(--text1);
   transition:all .18s;white-space:nowrap;
 }
@@ -106,7 +108,7 @@ body{
   font-size:16px;transition:all .18s;color:var(--text1);
 }
 .nav-icon-btn:hover{background:var(--bg3);color:var(--text0)}
-#main{min-height:100vh;padding-top:calc(62px + env(safe-area-inset-top,0px))}
+#main{min-height:100vh;padding-top:calc(56px + env(safe-area-inset-top,0px))}
 
 /* ─── MOBILE NAV ─── */
 @media(max-width:640px){
@@ -123,30 +125,29 @@ body{
   /* Bottom mobile nav — more breathing room */
   #mob-nav{
     display:flex;position:fixed;bottom:0;left:0;right:0;z-index:200;
-    background:#0a0a0a;
-    border-top:1px solid rgba(255,255,255,0.11);
-    border-bottom:1px solid rgba(255,255,255,0.11);
+    background:#1c1c1c;
+    border-top:1px solid rgba(255,255,255,.05);
     padding-bottom:env(safe-area-inset-bottom,0px);
-    height:calc(52px + env(safe-area-inset-bottom,0px));
+    height:calc(64px + env(safe-area-inset-bottom,0px));
     align-items:center;
     justify-content:space-around;
   }
   #mob-nav::after{display:none;}
   .mob-nl{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    height:56px;padding:0 2px;cursor:pointer;color:var(--text2);
-    font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;
-    border-radius:0;transition:color .18s;flex:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    height:64px;padding:0;cursor:pointer;color:var(--text2);
+    font-size:10px;font-weight:500;
+    border-radius:0;transition:color .15s;flex:1;position:relative;
   }
-  .mob-nl .icon{font-size:19px;line-height:1;display:flex;align-items:center;justify-content:center;}
-  .mob-nl.on{color:#ffffff;}
-  .mob-nl.on .icon{filter:drop-shadow(0 0 6px rgba(255,255,255,.4));}
-  .mob-nl{position:relative;}
-  .mob-nl.on::after{content:'';display:block;width:3px;height:3px;border-radius:50%;background:#fff;position:absolute;bottom:7px;left:50%;transform:translateX(-50%);}
+  .mob-nl:active{opacity:.7;}
+  .mob-nl .icon{font-size:21px;line-height:1;}
+  .mob-nl.on{color:var(--accent2);}
+  .mob-nl.on .icon{background:rgba(127,140,255,.2);}
+  .mob-nl.on svg{fill:var(--accent2);}
   /* Main content clears top nav + bottom nav + safe areas */
   #main{
     padding-top:calc(56px + env(safe-area-inset-top,0px));
-    padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));
+    padding-bottom:calc(64px + env(safe-area-inset-bottom,0px));
   }
   /* Back fab — keep it above bottom nav */
   #back-fab{top:auto;bottom:calc(72px + env(safe-area-inset-bottom));left:12px;width:38px;height:38px;}
@@ -154,7 +155,7 @@ body{
   .hero{height:320px !important;padding:16px 16px 24px !important;}
   .htitle{font-size:22px !important;}
   /* Continue watching cards — wider on mobile */
-  .cw-card{width:190px;}
+  .cw-card{width:220px;}
   /* Grid — 2 cols with better gap */
   .agrid{grid-template-columns:repeat(2,1fr);gap:12px;}
   .arow .acard{width:140px;}
@@ -222,7 +223,7 @@ body{
   .sugg-item{padding:14px;}
   .sugg-item img{width:40px;height:40px;}
   /* Section headings */
-  .sec-title{font-size:16px;}
+  .sec-title{font-size:11px;}
   .sec-more{font-size:13px;min-height:32px;display:flex;align-items:center;}
   /* Continue watching card — always show delete on mobile */
   .cw-del{opacity:1 !important;}
@@ -236,7 +237,7 @@ body{
   .dbtns .btn-p,.dbtns .btn-s{padding:12px 16px;font-size:13px;}
   .dstat{font-size:11px;}
   /* Watch page */
-  .watchpage{padding:6px 8px 20px;}
+  .watchpage{padding:10px 10px 24px;}
   .wtitle{font-size:17px;}
   .wep{font-size:12px;}
   /* Server/source buttons */
@@ -254,121 +255,38 @@ body{
   .cp-btn{padding:8px 8px;font-size:13px;min-height:40px;min-width:36px;display:flex;align-items:center;justify-content:center;}
   .cp-pp-btn{padding:8px 12px;}
   .cp-bot{padding:16px 10px 10px;}
-  .cp-seek{height:36px;} /* taller touch target for the seek bar */
+  .cp-seek{height:28px;}
   .cp-time{font-size:11px;}
   /* Speed/sub menus pop upward — make items bigger */
   .cp-speed-opt,.cp-sub-opt{padding:12px 18px;font-size:14px;}
 }
 
-/* ─── ANIMATIONS ─── */
-.page{animation:fadeup .26s cubic-bezier(.22,.68,0,1.2) both}
-@keyframes fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-@keyframes slideup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideright{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
-@keyframes scalein{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Stagger helpers */
-.stagger>*{opacity:0;animation:fadeup .22s cubic-bezier(.22,.68,0,1.2) both}
-.stagger>*:nth-child(1){animation-delay:.03s}
-.stagger>*:nth-child(2){animation-delay:.06s}
-.stagger>*:nth-child(3){animation-delay:.09s}
-.stagger>*:nth-child(4){animation-delay:.12s}
-.stagger>*:nth-child(5){animation-delay:.15s}
-.stagger>*:nth-child(6){animation-delay:.18s}
-.stagger>*:nth-child(n+7){animation-delay:.2s}
-
-/* Card row stagger */
-.arow .acard,.agrid .acard{
-  animation:scalein .24s cubic-bezier(.22,.68,0,1.2) both;
-}
-.arow .acard:nth-child(1),.agrid .acard:nth-child(1){animation-delay:.02s}
-.arow .acard:nth-child(2),.agrid .acard:nth-child(2){animation-delay:.05s}
-.arow .acard:nth-child(3),.agrid .acard:nth-child(3){animation-delay:.08s}
-.arow .acard:nth-child(4),.agrid .acard:nth-child(4){animation-delay:.11s}
-.arow .acard:nth-child(5),.agrid .acard:nth-child(5){animation-delay:.14s}
-.arow .acard:nth-child(6),.agrid .acard:nth-child(6){animation-delay:.17s}
-.arow .acard:nth-child(7),.agrid .acard:nth-child(7){animation-delay:.19s}
-.arow .acard:nth-child(n+8),.agrid .acard:nth-child(n+8){animation-delay:.21s}
-
-/* Section stagger */
-.sec{animation:fadeup .3s cubic-bezier(.22,.68,0,1.2) both}
-.sec:nth-child(1){animation-delay:0s}
-.sec:nth-child(2){animation-delay:.05s}
-.sec:nth-child(3){animation-delay:.1s}
-.sec:nth-child(4){animation-delay:.14s}
-.sec:nth-child(n+5){animation-delay:.17s}
-
-/* Episode list rows */
-.sibep{transition:background .12s,border-color .12s;}
-.epc{animation:slideright .2s cubic-bezier(.22,.68,0,1.2) both;}
-
-/* Player controls */
-.cp-ui.show .cp-top{animation:slideup .18s ease both}
-.cp-ui.show .cp-bot{animation:slideup .16s ease both}
-.cp-ui.show .cp-center .cp-nav-btns{animation:scalein .2s ease both}
-
-/* Skeleton shimmer */
-.skel{
-  background:linear-gradient(90deg,var(--bg2) 25%,var(--bg3) 50%,var(--bg2) 75%);
-  background-size:200% 100%;
-  animation:shimmer 1.6s ease infinite;
-  border-radius:var(--r);
-}
-
-/* Bottom nav tap feedback */
-.mob-nl{transition:color .15s,transform .1s;}
-.mob-nl:active{transform:scale(.88);}
-
-/* Button press */
-.btn-p,.btn-s,.svr,.tg,.sp-row,.cp-btn{transition:all .15s cubic-bezier(.22,.68,0,1.2);}
-.btn-p:active{transform:scale(.96);}
-.btn-s:active{transform:scale(.96);}
-.svr:active{transform:scale(.95);}
-
-/* Hero content */
-.hcontent>*{animation:slideup .3s cubic-bezier(.22,.68,0,1.2) both}
-.hcontent>.hbadge{animation-delay:.05s}
-.hcontent>.htitle{animation-delay:.1s}
-.hcontent>.hmeta{animation-delay:.14s}
-.hcontent>.hdesc{animation-delay:.17s}
-.hcontent>.hbtns{animation-delay:.2s}
-
-/* Toast */
-#toast{animation:slideup .22s cubic-bezier(.22,.68,0,1.2)}
-
-/* Modal spring */
-@keyframes modalin{from{transform:translateY(24px) scale(.96);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-.modal{animation:modalin .28s cubic-bezier(.22,.68,0,1.2)}
-
-/* Reduce motion */
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
-}
+/* ─── PAGE ANIM ─── */
+.page{animation:pageIn .18s cubic-bezier(.4,0,.2,1) both}
+@keyframes pageIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+.watchpage{animation:pageUp .18s cubic-bezier(.4,0,.2,1) both !important}
+@keyframes pageUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* ─── HERO ─── */
-.hero{position:relative;height:460px;display:flex;align-items:flex-end;padding:44px 36px;overflow:hidden;}
-@media(max-width:768px){.hero{height:290px;padding:16px 14px 20px}}
-@media(max-width:640px){.hero{height:220px;padding:10px 12px 14px}}
+.hero{position:relative;height:480px;display:flex;align-items:flex-end;padding:40px 20px;overflow:hidden;}
+@media(max-width:768px){.hero{height:320px;padding:18px 16px 22px}}
+@media(max-width:640px){.hero{height:260px;padding:14px 14px 18px}}
 .hbg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(3px) brightness(0.35) saturate(1.2);transform:scale(1.08);transition:background-image .8s ease;}
-.hgrad{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,.96) 28%, rgba(0,0,0,.5) 65%, rgba(0,0,0,.1)),linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,.2) 55%, transparent);}
+.hgrad{position:absolute;inset:0;background:linear-gradient(to right, rgba(0,0,0,.98) 20%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.15)),linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,.4) 40%, transparent 80%);}
 .hcontent{position:relative;z-index:2;max-width:580px}
-.hbadge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:20px;background:transparent;border:1px solid rgba(255,255,255,.12);font-size:9px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;color:var(--text2);}
-.htitle{font-family:'Outfit',sans-serif;font-size:38px;font-weight:800;line-height:1.08;letter-spacing:-.8px;margin-bottom:8px;}
-@media(max-width:768px){.htitle{font-size:26px;margin-bottom:8px;}}
+.hbadge{display:inline-flex;align-items:center;gap:5px;padding:3px 12px;border-radius:20px;background:transparent;border:1px solid rgba(255,255,255,.15);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;color:var(--text2);}
+.htitle{font-family:'Outfit',sans-serif;font-size:48px;font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:10px;}
+@media(max-width:768px){.htitle{font-size:28px;margin-bottom:8px;letter-spacing:-.5px;}}
 @media(max-width:640px){.htitle{font-size:20px;margin-bottom:6px;letter-spacing:-.3px;}}
-.hmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.hmeta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
 .hm{font-size:12px;color:var(--text1);display:flex;align-items:center;gap:4px}
 .hdesc{font-size:13px;color:var(--text1);line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:26px;}
 @media(max-width:640px){.hdesc{display:none;}.hmeta{margin-bottom:10px;gap:8px;}.hm{font-size:11px;}.hbtns{gap:8px;}.hbtns .btn-p{padding:10px 16px;font-size:13px;}.hbtns .btn-s{padding:10px 14px;font-size:13px;}}
 .hbtns{display:flex;gap:12px;flex-wrap:wrap}
-.btn-p{padding:9px 22px;background:#ffffff;border:none;border-radius:9px;color:#000000;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:6px;}
-.btn-p:hover{background:#e0e0e0;transform:translateY(-1px);}
-.btn-s{padding:9px 18px;background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:9px;color:var(--text0);font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:6px;backdrop-filter:blur(6px);}
-.btn-s:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+.btn-p{padding:10px 22px;background:var(--accent);border:none;border-radius:50px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:transform .12s,background .12s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:6px;}
+.btn-p:active{transform:scale(.96);background:rgba(127,140,255,.8);}
+.btn-s{padding:10px 18px;background:rgba(127,140,255,.12);border:1px solid rgba(127,140,255,.2);border-radius:50px;color:var(--accent2);font-size:13px;font-weight:600;cursor:pointer;transition:transform .12s,background .12s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:6px;}
+.btn-s:active{transform:scale(.96);background:rgba(127,140,255,.2);}
 .btn-s.active{background:rgba(255,255,255,.07);border-color:var(--accent);color:var(--accent2)}
 .hdots{position:absolute;bottom:32px;right:44px;display:flex;gap:7px;z-index:3;}
 @media(max-width:768px){.hdots{right:20px;bottom:20px}}
@@ -376,45 +294,48 @@ body{
 .hdot.on{width:22px;border-radius:4px;background:#ffffff}
 
 /* ─── SECTIONS ─── */
-.sec{padding:20px 16px 0;max-width:1440px;margin:0 auto}
-@media(max-width:768px){.sec{padding:18px 14px 0}}
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.sec-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:8px;}
-.sec-title::before{content:'';width:2px;height:13px;background:rgba(255,255,255,.7);border-radius:1px;}
+.sec{padding:22px 14px 0;max-width:1440px;margin:0 auto}
+@media(max-width:768px){.sec{padding:18px 12px 0}}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sec-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--text0);display:flex;align-items:center;gap:8px;}
+.sec-title::before{display:none;}
 .sec-more{font-size:12px;color:var(--text2);cursor:pointer;font-weight:500;transition:color .18s}
 .sec-more:hover{color:#fff}
 
 /* ─── ROW / GRID ─── */
-.arow{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.arow{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .arow::-webkit-scrollbar{display:none}
-.arow .acard{flex-shrink:0;width:154px}
-.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(154px,1fr));gap:14px;}
-@media(max-width:480px){
-  .agrid{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .arow .acard{width:130px;}
-  .ctitle{font-size:11px;}
-  .csub{font-size:10px;}
+.arow .acard{flex-shrink:0;width:120px}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;}
+@media(max-width:640px){
+  .agrid{grid-template-columns:repeat(3,1fr);gap:5px;}
+  .arow .acard{width:110px;}
+}
+@media(max-width:380px){
+  .agrid{grid-template-columns:repeat(3,1fr);gap:4px;}
 }
 
 /* ─── CARD ─── */
-.acard{cursor:pointer;border-radius:var(--r);overflow:hidden;transition:transform .2s;contain:layout style;}
-.acard:hover{transform:translateY(-5px)}
-.acard:hover .covr{transform:scale(1.06)}
-.acard:hover .cov-ov{opacity:1}
-.cov-wrap{position:relative;padding-top:142%;overflow:hidden;background:var(--bg2);border-radius:var(--r);}
+.acard{cursor:pointer;border-radius:var(--r);overflow:hidden;transition:transform .12s;contain:layout style;position:relative;}
+@media(hover:hover){.acard:hover{transform:translateY(-2px)}.acard:hover .covr{transform:scale(1.03)}}
+@media(hover:none){.acard:active{opacity:.8;transform:scale(.97)}}
+.cov-wrap{position:relative;padding-top:145%;overflow:hidden;background:var(--bg2);border-radius:var(--r);}
 .img-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800;color:rgba(255,255,255,0.15);font-family:'Outfit',sans-serif;background:linear-gradient(135deg,var(--bg3),var(--bg2));}
 .card-quick-add{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s,background .15s;z-index:4;line-height:1;}
 .acard:hover .card-quick-add,.card-quick-add.added{opacity:1;}
 .card-quick-add.added{background:rgba(52,211,153,0.35);border-color:var(--green);color:var(--green);}
 .covr{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
-.cov-ov{position:absolute;inset:0;opacity:0;transition:opacity .25s;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 50%);display:flex;align-items:center;justify-content:center;border-radius:var(--r);}
-.playbtn{width:42px;height:42px;background:#ffffff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#000;transform:scale(.8);transition:transform .2s;}
+.cov-ov{position:absolute;inset:0;opacity:1;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.1) 45%,transparent 65%);display:flex;align-items:flex-end;border-radius:var(--r);padding:0;}
+.playbtn{display:none;}
 .acard:hover .playbtn{transform:scale(1)}
 .cbadge{position:absolute;top:7px;left:7px;padding:2px 8px;background:#ffffff;color:#000;border-radius:6px;font-size:10px;font-weight:700;}
+.card-title-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px 8px 7px;pointer-events:none;}
+.card-title-text{font-size:11px;font-weight:600;color:#fff;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 4px rgba(0,0,0,.8);}
+.card-title-sub{font-size:9px;color:rgba(255,255,255,.6);margin-top:1px;font-weight:500;}
 .cscore{position:absolute;top:7px;right:7px;padding:2px 8px;background:rgba(0,0,0,.72);border-radius:6px;font-size:10px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:3px;}
 .cfav{position:absolute;bottom:7px;right:7px;width:22px;height:22px;background:rgba(0,0,0,.72);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;}
-.cinfo{padding:7px 2px 3px}
-.ctitle{font-size:11px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px;}
+.cinfo{padding:9px 3px 4px}
+.ctitle{font-size:11px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1px;}
 .csub{font-size:10px;color:var(--text2)}
 /* Category pill on My List cards */
 .score-pill{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(244,185,66,0.1);border:1px solid rgba(244,185,66,0.2);color:var(--gold);cursor:pointer;margin-top:2px;transition:background .15s;}
@@ -513,11 +434,12 @@ body{
 .ep-watched-icon{font-size:14px;flex-shrink:0;opacity:.7}
 
 /* ─── WATCH PAGE ─── */
-.watchpage{max-width:1440px;margin:0 auto;padding:22px 28px 48px}
-@media(max-width:768px){.watchpage{padding:14px 14px 32px}}
-.wlayout{display:grid;grid-template-columns:1fr 326px;gap:22px}
-@media(max-width:1080px){.wlayout{grid-template-columns:1fr}}
+.watchpage{max-width:1440px;margin:0 auto;padding:20px 24px 48px}
+@media(max-width:768px){.watchpage{padding:0 0 80px}}
+.wlayout{display:grid;grid-template-columns:1fr 320px;gap:20px}
+@media(max-width:1080px){.wlayout{grid-template-columns:1fr;gap:0}}
 .pwrap{background:#000;border-radius:var(--r);overflow:hidden;position:relative;aspect-ratio:16/9;}
+@media(max-width:768px){.pwrap{border-radius:0 !important;}}
 .pwrap video,.pwrap iframe{width:100%;height:100%;border:none}
 .ploading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000;flex-direction:column;gap:14px;z-index:5;}
 .spin{width:44px;height:44px;border:3px solid var(--bg4);border-top-color:#ffffff;border-radius:50%;animation:spin .7s linear infinite;}
@@ -530,7 +452,6 @@ body{
 
 /* UI layer */
 .cp-ui{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;pointer-events:none;user-select:none;}
-.cp-dismiss{position:absolute;inset:0;z-index:0;cursor:pointer;}
 .cp-ui.show,.cp-ui.paused{pointer-events:auto;}
 .cp-ui.iframe-mode{pointer-events:none;}
 .cp-ui.iframe-mode .cp-top{opacity:0;pointer-events:none;}
@@ -766,9 +687,9 @@ body{
 .cp-buf-spin.show{opacity:1;}
 
 /* Next episode overlay */
-.next-overlay{position:absolute;bottom:70px;right:14px;z-index:20;background:rgba(0,0,0,.96);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;min-width:200px;display:none;backdrop-filter:blur(12px);}
-.next-overlay.show{display:block}
-@media(max-width:640px){.next-overlay{right:8px;bottom:60px;min-width:160px;padding:10px 14px;}}
+.next-overlay{position:absolute;bottom:80px;right:12px;z-index:20;background:rgba(10,10,10,.97);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;min-width:180px;display:none;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,.6);}
+.next-overlay.show{display:block;animation:fadeup .2s ease both}
+@media(max-width:640px){.next-overlay{right:10px;bottom:70px;min-width:160px;padding:12px 14px;}}
 .next-title{font-size:11px;color:var(--text2);margin-bottom:4px}
 .next-ep{font-size:13px;font-weight:600;margin-bottom:10px}
 .next-bar{height:3px;background:var(--bg4);border-radius:2px;margin-bottom:10px;overflow:hidden}
@@ -798,74 +719,78 @@ body{
   .cp-speed-opt,.cp-sub-opt{padding:12px 18px;font-size:14px;}
 }
 
-.pinfo{padding:10px 0}
-.wtitle{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;margin-bottom:3px}
-.wep{font-size:12px;color:var(--text1);margin-bottom:10px}
-.sdtog{display:flex;gap:3px;background:var(--bg2);border-radius:9px;padding:3px;border:1px solid var(--border);width:fit-content;margin-bottom:10px;}
-.tg{padding:5px 15px;border-radius:7px;border:none;background:transparent;color:var(--text1);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;font-family:'Sora',sans-serif;}
-.tg.on{background:#ffffff;color:#000000}
-.svrs{display:flex;flex-direction:column;gap:0;margin-bottom:16px;}
-.svrs-section{padding:6px 0 4px;}
-.svrs-section-head{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
-.svrs-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-.svrs-row-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);white-space:nowrap;}
-.svrs-badge{font-size:9px;font-weight:700;letter-spacing:.5px;padding:1px 6px;border-radius:20px;}
-.svrs-badge-live{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.25);}
-.svrs-divider{height:1px;background:var(--border);margin:2px 0;}
-.svr{padding:5px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;color:var(--text1);font-size:11px;font-weight:500;cursor:pointer;transition:all .18s;font-family:'Sora',sans-serif;position:relative;overflow:hidden;}
-.svr:hover{background:var(--bg3);border-color:rgba(255,255,255,.2);color:var(--text0);}
-.svr.on{background:#ffffff;border-color:#ffffff;color:#000;font-weight:600;}
+.pinfo{padding:12px 14px 6px;}
+.wtitle{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.wep{font-size:11px;color:var(--text2);margin-bottom:10px;}
+.sdtog{display:flex;gap:2px;background:rgba(255,255,255,.08);border-radius:10px;padding:3px;width:fit-content;margin-bottom:10px;}
+.tg{padding:5px 16px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.45);font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;font-family:'Sora',sans-serif;}
+.tg.on{background:var(--accent);color:#fff;border-radius:20px;}
+.svrs{display:flex;flex-direction:column;gap:0;margin-bottom:12px;}
+.svrs-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:7px 0;}
+.svrs-row-label{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);margin-right:4px;white-space:nowrap;}
+.svrs-divider{height:1px;background:var(--border);margin:0;}
+.svr{padding:6px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;cursor:pointer;transition:transform .1s,background .1s;font-family:'Sora',sans-serif;}
+.svr:active{transform:scale(.93);}
+.svr.on{background:rgba(127,140,255,.2);border-color:var(--accent);color:var(--accent2);font-weight:600;}
 .svr-sep{display:none}.sibebar{background:var(--bg2);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);max-height:580px;display:flex;flex-direction:column;}
 .sibhead{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:space-between;}
 .siblist{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:var(--accent) var(--bg0)}
-.sibep{padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .14s;display:flex;gap:9px;align-items:center;}
-.sibep:hover{background:var(--bg3)}
-.sibep.on{background:rgba(255,255,255,.06);border-left:3px solid var(--accent)}
+.sibep{padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .1s;display:flex;gap:10px;align-items:center;-webkit-tap-highlight-color:transparent;position:relative;}
+.sibep:active{background:rgba(255,255,255,.06);}
+.sibep.on{background:rgba(127,140,255,.12);border-left:2px solid var(--accent);}
 .sibep.watched-ep{opacity:.5}
-.sibepn{font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:#ffffff;min-width:24px}
+.sibepn{font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;color:#ffffff;min-width:26px}
 .sibept{font-size:12px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sibep-check{font-size:11px;color:var(--green)}
-.sibep-prog{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);border-radius:0 1px 1px 0;pointer-events:none;}
-.sibep{position:relative;}
 
 /* ─── SEARCH PAGE ─── */
 .spage{max-width:1440px;margin:0 auto;padding:32px 28px 48px}
 @media(max-width:768px){.spage{padding:22px 16px 40px}}
-.sqtitle{font-family:'Outfit',sans-serif;font-size:28px;font-weight:700;margin-bottom:6px}
+.sqtitle{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-.3px;}
 .sqsub{font-size:13px;color:var(--text1);margin-bottom:16px}
 /* Genre filter chips */
 .genre-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.genre-chip{padding:5px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;transition:all .18s;}
+.genre-chip{padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;}
 .genre-chip:hover{border-color:var(--accent2)}
 .genre-chip.on{background:#ffffff;border-color:#ffffff;color:#000}
 
 /* ─── MY LIST PAGE ─── */
 .mylist-empty{padding:80px;text-align:center;color:var(--text2)}
+.lib-filter-bar{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.lib-filter-bar::-webkit-scrollbar{display:none}
+.lib-chip{padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text1);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'Sora',sans-serif;transition:all .12s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+.lib-chip:active{transform:scale(.95);}
+.lib-chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
 .mylist-empty div{font-size:48px;margin-bottom:16px}
 
 /* ─── MODAL ─── */
 .modal-bg{
-  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);
-  backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;
-  padding:20px;animation:fadein .2s ease;
+  position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.6);
+  backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;
+  padding:0;animation:fadein .18s ease;
 }
+@media(min-width:480px){.modal-bg{align-items:center;padding:20px;}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 .modal{
-  background:var(--bg1);border:1px solid var(--border);border-radius:18px;
-  padding:28px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;
-  box-shadow:0 24px 64px rgba(0,0,0,.6);animation:modalin .25s ease;
+  background:var(--bg1);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px 20px 0 0;
+  padding:24px 20px calc(20px + env(safe-area-inset-bottom,0px));
+  width:100%;max-width:520px;max-height:90vh;overflow-y:auto;
+  box-shadow:0 -8px 40px rgba(0,0,0,.5);animation:modalin .22s cubic-bezier(.4,0,.2,1);
 }
-@keyframes modalin{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;margin-bottom:6px}
+@media(min-width:480px){.modal{border-radius:18px;padding:28px;animation:modalinDesktop .2s cubic-bezier(.4,0,.2,1);}}
+@keyframes modalin{from{transform:translateY(100%);opacity:1}to{transform:translateY(0);opacity:1}}
+@keyframes modalinDesktop{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal-title{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;letter-spacing:-.3px;}
 .modal-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
 .modal-close{float:right;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;margin-top:-4px;}
 .modal-close:hover{color:var(--text0)}
 .inp{
-  width:100%;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);
+  width:100%;padding:11px 14px;background:var(--bg2);border:1px solid rgba(255,255,255,.08);
   border-radius:10px;color:var(--text0);font-size:13px;font-family:'Sora',sans-serif;
-  outline:none;transition:border-color .2s;margin-bottom:12px;
+  outline:none;transition:border-color .18s;margin-bottom:12px;
 }
-.inp:focus{border-color:rgba(255,255,255,.3)}
+.inp:focus{border-color:rgba(255,255,255,.25);background:var(--bg3);}
 .inp-label{font-size:12px;color:var(--text2);margin-bottom:6px;display:block}
 .import-section{background:var(--bg2);border-radius:var(--r);padding:18px;margin-bottom:16px}
 .import-section h3{font-size:14px;font-weight:600;margin-bottom:4px}
@@ -878,7 +803,7 @@ body{
 /* ── Settings page ── */
 .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
 .settings-row:last-child{border-bottom:none}
-.settings-label{font-size:13px;font-weight:500}
+.settings-label{font-size:13px}
 .settings-sub{font-size:11px;color:var(--text2);margin-top:2px}
 .sp{padding:0 16px 32px}
 .sp-header{display:flex;align-items:center;gap:12px;padding:16px 16px 8px;position:sticky;top:0;background:var(--bg0);z-index:10;border-bottom:1px solid var(--border);margin-bottom:4px}
@@ -887,7 +812,7 @@ body{
 .sp-account-card{background:var(--bg2);border-radius:16px;padding:18px;margin:12px 0 20px;border:1px solid var(--border)}
 .sp-account-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0}
 .sp-account-avatar img{width:100%;height:100%;object-fit:cover}
-.sp-section-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;padding:14px 0 5px}
+.sp-section-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.12em;padding:20px 0 6px}
 .sp-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .sp-row:last-child{border-bottom:none}
 .sp-row:active{opacity:.7}
@@ -925,14 +850,15 @@ body{
 
 /* ─── MISC ─── */
 .pb48{padding-bottom:48px}
-.backlink{font-size:12px;color:var(--text1);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-bottom:16px;transition:color .15s;}
+.backlink{font-size:12px;color:var(--text1);cursor:pointer;display:none;align-items:center;gap:5px;margin-bottom:12px;transition:color .15s;}
 .backlink:hover{color:var(--text0)}
+@media(min-width:769px){.backlink{display:inline-flex;}}
 .empty{grid-column:1/-1;padding:60px;text-align:center;color:var(--text2);font-size:15px;}
 
 /* ─── RATING STARS ─── */
-.rating-star{font-size:19px;cursor:pointer;color:var(--bg4);transition:color .1s;user-select:none;}
-.rating-star.lit{color:#ffffff}
-.rating-star:hover{color:#ffffff;transform:scale(1.2)}
+.rating-dot{font-size:19px;cursor:pointer;color:var(--bg4);transition:color .1s;user-select:none;}
+.rating-dot.lit{color:#ffffff}
+.rating-dot:hover{color:#ffffff;transform:scale(1.2)}
 
 /* ─── AL STATUS / MY LIST TABS ─── */
 .ml-tab{font-size:12px;padding:5px 12px;}
@@ -983,10 +909,22 @@ body{
 
 /* ─── THEME ─── */
 body.light-theme{
-  --bg0:#f5f5f5;--bg1:#ffffff;--bg2:#eeeeee;--bg3:#e0e0e0;--bg4:#cccccc;
-  --text0:#111111;--text1:#444444;--text2:#888888;
-  --border:rgba(0,0,0,0.1);--glow:rgba(0,0,0,0.05);
+  --bg0:#fafafa;--bg1:#ffffff;--bg2:#f0f0f0;--bg3:#e8e8e8;--bg4:#dedede;
+  --text0:#1a1a1a;--text1:#555555;--text2:#999999;
+  --border:rgba(0,0,0,0.08);
+  --accent:#5c6bc0;--accent2:#3949ab;
+  --glow:rgba(92,107,192,0.12);--glow2:rgba(92,107,192,0.06);
+  color-scheme:light;
 }
+body.light-theme #nav{background:rgba(250,250,250,0.92);}
+body.light-theme #mob-nav{background:rgba(248,248,248,0.95);border-top-color:rgba(0,0,0,.08);}
+body.light-theme .cp-top{background:linear-gradient(to bottom,rgba(0,0,0,.7) 0%,transparent 100%);}
+body.light-theme .cp-bot{background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 100%);}
+body.light-theme .modal{background:#ffffff;border-color:rgba(0,0,0,.1);}
+body.light-theme .modal-bg{background:rgba(0,0,0,.4);}
+body.light-theme .sp-header{background:#fafafa;}
+body.light-theme .sibebar{background:#ffffff;border-color:rgba(0,0,0,.08);}
+body.light-theme .sibep.on{background:rgba(92,107,192,.1);border-left-color:var(--accent);}
 body.light-theme #nav{background:rgba(245,245,245,0.95);}
 body.light-theme .hbg{filter:blur(3px) brightness(0.55) saturate(1.2);}
 
@@ -1082,7 +1020,7 @@ html,body{overscroll-behavior:none;}
 @media(max-width:640px){
   #nav{height:calc(56px + var(--cap-status));padding-top:var(--cap-status);}
   #main{padding-top:calc(56px + var(--cap-status));padding-bottom:calc(56px + var(--cap-bottom));}
-  #mob-nav{padding-bottom:var(--cap-bottom);height:calc(56px + var(--cap-bottom));}
+  #mob-nav{padding-bottom:var(--cap-bottom);height:calc(64px + var(--cap-bottom));}
   /* Disable text selection except inputs */
   body{-webkit-user-select:none;user-select:none;}
   input,textarea{-webkit-user-select:text;user-select:text;}
@@ -1090,9 +1028,9 @@ html,body{overscroll-behavior:none;}
   *{-webkit-tap-highlight-color:transparent;}
   /* Player fills edge-to-edge */
   .pwrap{border-radius:0 !important;}
-  .watchpage{padding-left:0 !important;padding-right:0 !important;}
-  .pinfo{padding:12px 14px;}
-  .backlink{padding:10px 14px 0 !important;}
+  .watchpage{padding:0 !important;}
+  .pinfo{padding:10px 14px 4px;}
+  .backlink{display:none !important;}
   /* Sidebar hidden on mobile — use FAB episodes panel */
   .sibebar{display:none !important;}
   /* Single-col layout */
@@ -1393,16 +1331,10 @@ body.bulk-mode .acard:hover{transform:none;}
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="logo" onclick="go('home')" title="Swach">
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="8" fill="#fff"/>
-      <path d="M8 11.5C8 9.57 9.57 8 11.5 8h3c1.1 0 2 .9 2 2s-.9 2-2 2h-2.5a.5.5 0 0 0 0 1H14c1.93 0 3.5 1.57 3.5 3.5S15.93 20 14 20h-1v2a2 2 0 0 1-4 0V20h-.5C6.57 20 5 18.43 5 16.5S6.57 13 8.5 13" stroke="#000" stroke-width="1.6" stroke-linecap="round"/>
-      <circle cx="22" cy="10" r="3" fill="#000"/>
-      <rect x="20" y="14" width="4" height="10" rx="2" fill="#000"/>
-    </svg>
-  </div>
+  <div class="logo" onclick="go('home')">Swach</div>
   <div class="nav-links">
-    <div class="nl on" onclick="go('home')" data-r="home">Home</div>
+    <div class="nl on" onclick="go('mylist')" data-r="mylist">Library</div>
+    <div class="nl" onclick="go('home')" data-r="home">Discover</div>
     <div class="nl" onclick="go('trending')" data-r="trending">Trending</div>
     <div class="nl" onclick="go('seasonal')" data-r="seasonal">Season</div>
     <div class="nl" onclick="go('movies')" data-r="movies">Movies</div>
@@ -1424,14 +1356,12 @@ body.bulk-mode .acard:hover{transform:none;}
         onblur="hideSugg()">
       <div class="sugg" id="sugg"></div>
     </div>
-    <div class="nav-icon-btn mob-hide" onclick="goRandom()" title="Random Anime" style="font-size:13px">⚄</div>
+    <div class="nav-icon-btn mob-hide" onclick="goRandom()" title="Random Anime" style="font-size:13px"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5 4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm0-8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></div>
     <div class="nav-icon-btn mob-hide" onclick="toggleTheme()" title="Toggle Theme" id="theme-btn">◑</div>
     <div class="nav-icon-btn mob-hide" onclick="toggleKbOverlay()" title="Keyboard Shortcuts" style="font-size:11px;font-weight:700">?</div>
     <div class="nav-icon-btn mob-hide" onclick="openImport()" title="Import List">↑</div>
-    <div class="nav-icon-btn mob-hide" onclick="parseRoute()" title="Refresh page" style="font-size:15px">↻</div>
-    <div class="nav-icon-btn mob-hide" onclick="go('settings')" title="Settings">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94zM12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
-    </div>
+    <div class="nav-icon-btn mob-hide" onclick="parseRoute()" title="Refresh page" style="font-size:15px"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></div>
+    <div class="nav-icon-btn mob-hide" onclick="go('settings')" title="Settings"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg></div>
     <div class="nav-icon-btn" id="nav-user-btn" onclick="S.alUser?openProfile():openLogin()" title="AniList Login" style="font-size:13px;font-weight:700;position:relative">AL<span id="sync-badge" style="position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--green);opacity:0;transition:opacity .4s;pointer-events:none"></span></div>
   </div>
 </nav>
@@ -1439,23 +1369,42 @@ body.bulk-mode .acard:hover{transform:none;}
 <div id="main"></div>
 <!-- Mobile bottom nav -->
 <div id="mob-nav">
-  <div class="mob-nl on" onclick="go('home')" data-r="home"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></div>Home</div>
-  <div class="mob-nl" onclick="go('schedule')" data-r="schedule"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg></div>Schedule</div>
-  <div class="mob-nl" onclick="go('search',{})" data-r="search"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>Search</div>
-  <div class="mob-nl" onclick="go('mylist')" data-r="mylist"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>My List</div>
-  <div class="mob-nl" onclick="go('settings')" data-r="settings"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></div>Settings</div>
+  <div class="mob-nl on" onclick="go('mylist')" data-r="mylist">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM10 9h8v2h-8zm0 3h4v2h-4zm0-6h8v2h-8z"/></svg>
+    </div>
+    Library
+  </div>
+  <div class="mob-nl" onclick="go('history')" data-r="history">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+    </div>
+    Updates
+  </div>
+  <div class="mob-nl" onclick="go('search',{})" data-r="search">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </div>
+    Browse
+  </div>
+  <div class="mob-nl" onclick="go('settings')" data-r="settings">
+    <div class="icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </div>
+    More
+  </div>
 </div>
 <!-- Offline banner -->
-<div id="offline-banner">Offline — some content may not load</div>
+<div id="offline-banner">You're offline</div>
 <!-- Swipe-back indicator -->
 <div class="swipe-indicator" id="swipe-ind"></div>
 <!-- Mini player -->
 <div id="mini-player">
   <video id="mini-vid" playsinline></video>
   <div class="mini-bar">
-    <div class="mini-pp" onclick="miniTogglePlay()">▶</div>
+    <div class="mini-pp" onclick="miniTogglePlay()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
     <div class="mini-bar-title" id="mini-title">Mini Player</div>
-    <div class="mini-close" onclick="closeMiniPlayer()">✕</div>
+    <div class="mini-close" onclick="closeMiniPlayer()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
   </div>
 </div>
 <div id="toast"></div>
@@ -1465,13 +1414,13 @@ body.bulk-mode .acard:hover{transform:none;}
 <!-- Scroll to top -->
 <div id="scroll-top" title="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 <!-- Mobile refresh FAB -->
-<div id="mob-refresh-btn" title="Refresh" onclick="mobRefresh()">↻</div>
+<div id="mob-refresh-btn" title="Refresh" onclick="mobRefresh()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></div>
 <!-- Keyboard shortcuts overlay -->
 <div id="kb-overlay" onclick="if(event.target===this)toggleKbOverlay()">
   <div class="kb-box">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div class="modal-title" style="margin-bottom:0">Keyboard Shortcuts</div>
-      <button class="modal-close" style="float:none" onclick="toggleKbOverlay()">✕</button>
+      <button class="modal-close" style="float:none" onclick="toggleKbOverlay()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
     </div>
     <div class="kb-row"><span class="kb-desc">Play / Pause</span><span class="kb-key">Space / K</span></div>
     <div class="kb-row"><span class="kb-desc">Seek forward 10s</span><span class="kb-key">→ / L</span></div>
@@ -1503,11 +1452,19 @@ body.bulk-mode .acard:hover{transform:none;}
 function safeLS(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def}catch{return def}}
 function setLS(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 
+function setNativeTheme(theme){
+  const wantLight = theme === 'light';
+  const saved = safeLS('aniTheme', null);
+  if(saved === null) {
+    document.body.classList.toggle('light-theme', wantLight);
+  }
+}
+
 // ═══════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════
 const S = {
-  route:'home', params:{},
+  route:'mylist', params:{},
   history:    safeLS('aniHistory',[]),
   favorites:  safeLS('aniFavs',[]),
   watched:    safeLS('aniWatched',{}),
@@ -1566,6 +1523,9 @@ async function goRandom(){
 // ═══════════════════════════════════════════
 //  ROUTER
 // ═══════════════════════════════════════════
+function _haptic(type='light'){
+  if(window.AndroidBridge) window.AndroidBridge.haptic(type);
+}
 function go(route, params={}){
   // Push previous state for back button
   if(S.route) _navStack.push({route:S.route,params:{...S.params}});
@@ -1813,7 +1773,7 @@ async function doALLogin(token){
   const user=await getViewerInfo();
   if(user){
     S.alUser=user; setLS('aniUser',user);
-    toast(`✓ Logged in as ${user.name}`,'ok');
+    toast(`Logged in as ${user.name}`,'ok');
     updateNavUser();
     fetchALUserList();
   }else{
@@ -1854,7 +1814,7 @@ function openLogin(){
   mr.innerHTML=`
   <div class="modal-bg" onclick="closeModal(event)">
     <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <div class="modal-title">AniList Account</div>
       <div class="modal-sub">Sync your watch progress, ratings and list</div>
       ${S.alUser?`
@@ -1862,7 +1822,7 @@ function openLogin(){
           <img src="${S.alUser.avatar?.large||''}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--accent)">
           <div style="flex:1">
             <div style="font-weight:700;font-size:16px">${S.alUser.name}</div>
-            <div style="font-size:12px;color:var(--green);margin-top:3px">✓ Connected to AniList</div>
+            <div style="font-size:12px;color:var(--green);margin-top:3px">Connected</div>
             <div style="font-size:11px;color:var(--text2);margin-top:2px">${Object.keys(S.alListCache).length} anime synced</div>
           </div>
           <button class="btn-s" onclick="logoutAL()" style="font-size:11px;padding:6px 12px;color:var(--red);border-color:rgba(248,113,113,.3)">Logout</button>
@@ -1879,7 +1839,7 @@ function openLogin(){
           <div><div style="font-size:18px;font-weight:700;color:var(--accent2)">${S.alUser.statistics.anime.episodesWatched||0}</div><div style="font-size:11px;color:var(--text2)">Episodes</div></div>
           <div><div style="font-size:18px;font-weight:700;color:var(--accent2)">${Math.floor((S.alUser.statistics.anime.minutesWatched||0)/60/24)}d</div><div style="font-size:11px;color:var(--text2)">Watch Time</div></div>
         </div>`:''}
-        <button class="btn-p" onclick="fetchALUserList().then(()=>{toast('✓ List synced from AniList','ok');closeModal();})" style="width:100%;justify-content:center">↻ Sync List from AniList</button>
+        <button class="btn-p" onclick="fetchALUserList().then(()=>{toast('List synced','ok');closeModal();})" style="width:100%;justify-content:center">Sync from AniList</button>
       `:`
         <div class="import-section">
           <h3>Step 1 — Create AniList API Client</h3>
@@ -1935,10 +1895,10 @@ async function rateAnime(mediaId,score){
   toast(`Rated ${score}/10`,'ok');
 }
 function updateRatingUI(mediaId,score){
-  const stars=document.querySelectorAll('.rating-star');
+  const stars=document.querySelectorAll('.rating-dot');
   stars.forEach(s=>s.classList.toggle('lit',parseInt(s.dataset.n)<=score));
 }
-function previewRating(n){document.querySelectorAll('.rating-star').forEach(s=>s.classList.toggle('lit',parseInt(s.dataset.n)<=n));}
+function previewRating(n){document.querySelectorAll('.rating-dot').forEach(s=>s.classList.toggle('lit',parseInt(s.dataset.n)<=n));}
 function resetRating(score){updateRatingUI(null,score);}
 
 // ─── AniList User List Import
@@ -1952,11 +1912,7 @@ async function getAniListUserList(username){
 //  Local api-server (same origin, /api path) using aniwatch npm package.
 //  Falls back to external API if local server unavailable.
 // ═══════════════════════════════════════════
-// In Capacitor the page origin is 'capacitor://localhost' — not a valid HTTP endpoint.
-// Fall back to http://localhost:3000 (the local scraper) when origin is non-HTTP.
-const _pageOrigin = window.location.origin;
-const _isHttpOrigin = /^https?:\/\//.test(_pageOrigin);
-const HIANIME_API = _isHttpOrigin ? _pageOrigin : 'http://localhost:3000';
+const HIANIME_API = window.location.origin;
 
 // Allow self-hosted override via Settings → Stream API
 // Returns the active API base URL.
@@ -1966,17 +1922,15 @@ const HIANIME_API = _isHttpOrigin ? _pageOrigin : 'http://localhost:3000';
 // fire a one-shot toast so the user knows why their local server isn't being hit.
 let _pnaFallbackToasted = false;
 function _isLocalhostUrl(u){ return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/.test(u); }
-function _isNullOriginPage(){ const o=window.location.origin; return o==='null'||o.startsWith('capacitor://')||o.startsWith('file://')||o.startsWith('content://'); }
-function _isChrome(){ return /Chrome/.test(navigator.userAgent) && !/Lemur|OPR|Edg/.test(navigator.userAgent); }
+function _isNullOriginPage(){ return window.location.origin === 'null'; }
 function getApiUrl(){
   const saved = (S.settings.apiUrl||'').trim();
   if(saved && _isLocalhostUrl(saved) && _isNullOriginPage()){
+    // PNA fallback — use cloud instance instead
     if(!_pnaFallbackToasted){
       _pnaFallbackToasted = true;
-      const msg = _isChrome()
-        ? 'Chrome blocks localhost API. Use Lemur browser or set a public API URL in Settings.'
-        : 'Local API blocked (null origin). Set a public API URL in Settings.';
-      setTimeout(()=>toast(msg,'err'), 1200);
+      // Defer toast until after app init
+      setTimeout(()=>toast('Local API blocked by Chrome PNA — using cloud instance. Open Settings > Stream API for the fix.','err'), 1200);
     }
     return HIANIME_API;
   }
@@ -2609,6 +2563,7 @@ function toggleFav(id,title,cover){
     if(S.alToken) deleteFromAL(id).catch(()=>{});
   } else {
     S.favorites.push({id,title,cover,ts:Date.now()});
+    _haptic('medium');
     toast(`Added to My List`,'ok');
     // Add as PLANNING if not already in AniList list
     if(S.alToken&&!S.alListCache[id]) syncToAL(id,'PLANNING',0).catch(()=>{});
@@ -2618,7 +2573,7 @@ function toggleFav(id,title,cover){
   const faved=S.favorites.some(f=>f.id===id);
   document.querySelectorAll('#fav-btn,[data-fav-id="'+id+'"]').forEach(fb=>{
     fb.classList.toggle('active',faved);
-    if(fb.id==='fav-btn') fb.textContent=faved?'♥ In List':'♡ My List';
+    if(fb.id==='fav-btn') fb.textContent=faved?'In List':'My List';
   });
   // Re-render My List page if currently on it
   if(S.route==='mylist'){const m=document.getElementById('main');if(m)renderMyList(m);}
@@ -2629,11 +2584,11 @@ function isFav(id){return S.favorites.some(f=>f.id===id)}
 function addToListWithCategory(id,title,cover){
   const mr=document.getElementById('modal-root');
   const opts=[
-    ['CURRENT',  '▶','Watching',     'var(--accent2)'],
-    ['COMPLETED','✓','Completed',    'var(--green)'],
-    ['PLANNING', '⊕','Plan to Watch','var(--gold)'],
-    ['PAUSED',   '⏸','On Hold',      '#888'],
-    ['DROPPED',  '✕','Dropped',      'var(--red)'],
+    ['CURRENT',  '','Watching',     'var(--accent2)'],
+    ['COMPLETED','','Completed',    'var(--green)'],
+    ['PLANNING', '','Plan to Watch','var(--gold)'],
+    ['PAUSED',   '','On Hold',      '#888'],
+    ['DROPPED',  '','Dropped',      'var(--red)'],
   ];
   mr.innerHTML=`
   <div class="modal-bg" onclick="closeModal(event)">
@@ -2672,14 +2627,14 @@ function _addWithCat(id,title,cover,status){
   const fb=document.getElementById('fav-btn');
   if(fb){
     fb.classList.add('active');
-    fb.textContent='♥ In List';
+    fb.textContent='In List';
     fb.setAttribute('onclick',`toggleFav(${id},'${title.replace(/'/g,"\\'")}','${cover}')`);
   }
   // Update category button
   const catBtn=document.getElementById('al-status-dot');
   if(catBtn){
     const STATUS_COLOR={CURRENT:'var(--accent2)',COMPLETED:'var(--green)',PLANNING:'var(--gold)',PAUSED:'#888',DROPPED:'var(--red)'};
-    const STATUS_ICON={CURRENT:'▶',COMPLETED:'✓',PLANNING:'⊕',PAUSED:'⏸',DROPPED:'✕'};
+    const STATUS_ICON={CURRENT:'',COMPLETED:'',PLANNING:'',PAUSED:'',DROPPED:''};
     const STATUS_LABEL={CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped'};
     const col=STATUS_COLOR[status];
     catBtn.style.borderColor=col; catBtn.style.color=col;
@@ -2723,10 +2678,15 @@ function cardHTML(a){
   <div class="acard" onclick="go('anime',{id:${a.id}})">
     <div class="cov-wrap">
       <img class="covr" src="${cv}" alt="${t}" loading="lazy" onerror="_imgFallback(this,'${esc}')">
-      <div class="cov-ov"><div class="playbtn">▶</div></div>
+      <div class="cov-ov">
+        <div class="card-title-overlay">
+          <div class="card-title-text">${T(a)}</div>
+          ${a.episodes||a.format?`<div class="card-title-sub">${[a.format,a.episodes?a.episodes+' ep':''].filter(Boolean).join(' · ')}</div>`:''}
+        </div>
+      </div>
       ${showBadge?`<div class="cbadge">${fmt}</div>`:''}
-      ${s?`<div class="cscore">★ ${s}</div>`:''}
-      <button class="card-quick-add ${faved?'added':''}" title="${faved?'In My List':'Add to list'}" onclick="event.stopPropagation();${faved?`toggleFav(${a.id},'${esc}','${cv}')`:`addToListWithCategory(${a.id},'${esc}','${cv}')`}" data-fav-id="${a.id}">${faved?'♥':'+'}</button>
+      ${s?`<div class="cscore">${s}</div>`:''}
+      <button class="card-quick-add ${faved?'added':''}" title="${faved?'In My List':'Add to list'}" onclick="event.stopPropagation();${faved?`toggleFav(${a.id},'${esc}','${cv}')`:`addToListWithCategory(${a.id},'${esc}','${cv}')`}" data-fav-id="${a.id}">${faved?'−':'+'}</button>
     </div>
     <div class="cinfo">
       <div class="ctitle">${t}</div>
@@ -2803,11 +2763,10 @@ function heroHTML(){
     <div class="hbg" id="hbg" style="background-image:url('${banner}')"></div>
     <div class="hgrad"></div>
     <div class="hcontent">
-      <div class="hbadge">Trending Now</div>
       ${a.status==='RELEASING'?`<span class="airing-badge" style="margin-bottom:10px;display:inline-flex"><span class="airing-dot"></span>Airing</span>`:''}
       <h1 class="htitle">${t}</h1>
       <div class="hmeta">
-        ${s?`<div class="hm">★ ${s}</div>`:''}
+        ${s?`<div class="hm">${s}</div>`:''}
         ${a.episodes?`<div class="hm">${a.episodes} eps</div>`:''}
         ${a.seasonYear?`<div class="hm">${a.seasonYear}</div>`:''}
         ${studio?`<div class="hm">${studio}</div>`:''}
@@ -2817,7 +2776,7 @@ function heroHTML(){
       <div class="hbtns">
         <button class="btn-p" onclick="go('watch',{id:${a.id},ep:'1'})">Watch Now</button>
         <button class="btn-s" onclick="go('anime',{id:${a.id}})">Info</button>
-        <button class="btn-random" onclick="goRandom()" title="Random anime">⚄</button>
+        <button class="btn-random" onclick="goRandom()" title="Random anime"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5 4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm0-8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></button>
       </div>
     </div>
     <div class="hdots">
@@ -2842,7 +2801,7 @@ function setHero(i){
   if(hdesc) hdesc.textContent=d||'';
   const hmeta=document.querySelector('.hmeta');
   if(hmeta) hmeta.innerHTML=`
-    ${s?`<div class="hm">★ ${s}</div>`:''}
+    ${s?`<div class="hm">${s}</div>`:''}
     ${a.episodes?`<div class="hm">${a.episodes} eps</div>`:''}
     ${a.seasonYear?`<div class="hm">${a.seasonYear}</div>`:''}
     ${studio?`<div class="hm">${studio}</div>`:''}
@@ -2874,7 +2833,7 @@ function cwHTML(){
         <img src="${h.cover}" alt="${h.title}" loading="lazy">
         <div class="cw-bar" style="width:${pct}%"></div>
         <div class="cw-ep">EP ${h.ep}</div>
-        <div class="cw-del" onclick="removeHistory(${h.id},event)" title="Remove">✕</div>
+        <div class="cw-del" onclick="removeHistory(${h.id},event)" title="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
       </div>
       <div class="cw-info">
         <div class="cw-title">${h.title}</div>
@@ -2911,16 +2870,16 @@ function renderHome(m){
       <div class="arow" id="m-row"><div style="display:flex;gap:14px">${skels(8)}</div></div>
     </div>
     <div class="sec pb48">
-      <div class="sec-head"><div class="sec-title">✦ Anime of the Day</div></div>
+      <div class="sec-head"><div class="sec-title">Anime of the Day</div></div>
       <div id="aotd-slot">${skels(1)}</div>
     </div>
     <div class="sec pb48">
-      <div class="sec-head"><div class="sec-title">🆕 New This Week</div><div class="sec-more" onclick="go('newreleases')">View all →</div></div>
+      <div class="sec-head"><div class="sec-title">New This Week</div><div class="sec-more" onclick="go('newreleases')">View all →</div></div>
       <div class="arow" id="new-row"><div style="display:flex;gap:14px">${skels(8)}</div></div>
     </div>
     <div class="sec pb48" id="for-you-sec" style="display:none">
       <div class="sec-head">
-        <div class="sec-title">✦ For You</div>
+        <div class="sec-title">For You</div>
         <div id="for-you-chips" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div>
       </div>
       <div class="arow" id="for-you-row"><div style="display:flex;gap:14px">${skels(8)}</div></div>
@@ -2965,10 +2924,10 @@ function renderHome(m){
             <img src="${cover(pick)}" style="width:100%;height:100%;object-fit:cover;display:block">
           </div>
           <div style="padding:18px 20px;flex:1;min-width:0">
-            <div style="font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px">★ Today's Pick</div>
+            <div style="font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px">Today's Pick</div>
             <div style="font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;line-height:1.2">${T(pick)}</div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">
-              ${s?`<span style="font-size:12px;color:var(--gold)">★ ${s}</span>`:''}
+              ${s?`<span style="font-size:12px;color:var(--gold)">${s}</span>`:''}
               ${pick.episodes?`<span style="font-size:12px;color:var(--text1)">${pick.episodes} eps</span>`:''}
               ${pick.seasonYear?`<span style="font-size:12px;color:var(--text1)">${pick.seasonYear}</span>`:''}
             </div>
@@ -2981,9 +2940,9 @@ function renderHome(m){
     if(!trend.length&&!season.length&&!movies.length){
       const hs=document.getElementById('hero-slot');
       if(hs) hs.innerHTML=`<div style="height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--text2)">
-        <div style="font-size:28px">⚠</div>
+        <div style="font-size:28px;opacity:.3"><svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
         <div style="font-size:14px">Failed to load. Check your connection.</div>
-        <button class="btn-s" onclick="renderHome(document.getElementById('main'))" style="font-size:12px;padding:8px 18px">↻ Retry</button>
+        <button class="btn-s" onclick="renderHome(document.getElementById('main'))" style="font-size:12px;padding:8px 18px">Retry</button>
       </div>`;
     }
     // ── New This Week ──────────────────────────────────────────────────────
@@ -3080,7 +3039,7 @@ async function renderSearch(m){
         <div class="agrid">${cwSlice.map(h=>`
           <div class="acard" onclick="go('anime',{id:${h.id}})">
             <div class="cov-wrap"><img class="covr" src="${h.cover||''}" loading="lazy">
-              <div class="cov-ov"><div class="playbtn">▶</div></div>
+              <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
               <div class="cw-ep" style="position:absolute;bottom:8px;right:8px">EP ${h.ep}</div>
             </div>
             <div class="cinfo"><div class="ctitle">${h.title}</div></div>
@@ -3213,9 +3172,9 @@ function renderMyList(m){
     </div>
     <div id="ml-bulk-bar" class="bulk-bar" style="display:none">
       <span class="bulk-count" id="ml-bulk-count">0 selected</span>
-      <button class="btn-s" onclick="bulkSetStatus('COMPLETED')" style="font-size:11px;padding:5px 12px;color:var(--green);border-color:rgba(52,211,153,.3)">✓ Mark Completed</button>
-      <button class="btn-s" onclick="bulkSetStatus('CURRENT')" style="font-size:11px;padding:5px 12px">▶ Mark Watching</button>
-      <button class="btn-s" onclick="bulkRemove()" style="font-size:11px;padding:5px 12px;color:var(--red);border-color:rgba(248,113,113,.3)">✕ Remove</button>
+      <button class="btn-s" onclick="bulkSetStatus('COMPLETED')" style="font-size:11px;padding:5px 12px;color:var(--green);border-color:rgba(52,211,153,.3)">Mark Completed</button>
+      <button class="btn-s" onclick="bulkSetStatus('CURRENT')" style="font-size:11px;padding:5px 12px">Mark Watching</button>
+      <button class="btn-s" onclick="bulkRemove()" style="font-size:11px;padding:5px 12px;color:var(--red);border-color:rgba(248,113,113,.3)">Remove</button>
       <button class="btn-s" onclick="bulkSelectAll()" style="font-size:11px;padding:5px 12px">Select All</button>
     </div>
     ${filtered.length?`
@@ -3224,21 +3183,21 @@ function renderMyList(m){
         const alEntry=S.alListCache[f.id];
         const st=alEntry?.status;
         const STATUS_COLOR={CURRENT:'var(--accent2)',COMPLETED:'var(--green)',PLANNING:'var(--gold)',PAUSED:'#888',DROPPED:'var(--red)'};
-        const STATUS_ICON={CURRENT:'▶',COMPLETED:'✓',PLANNING:'⊕',PAUSED:'⏸',DROPPED:'✕'};
+        const STATUS_ICON={CURRENT:'',COMPLETED:'',PLANNING:'',PAUSED:'',DROPPED:''};
         const STATUS_LABEL={CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped'};
         const pillColor=st?STATUS_COLOR[st]:'';
-        const pillIcon=st?STATUS_ICON[st]:'⊕';
+        const pillIcon='';
         const pillLabel=st?STATUS_LABEL[st]:'Add Category';
         const progBar=alEntry?.progress&&f.total?`<div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(0,0,0,.5)"><div style="height:100%;width:${Math.min((alEntry.progress/f.total)*100,100)}%;background:var(--accent);border-radius:2px"></div></div>`:'';
         return `
         <div class="acard" onclick="mlCardClick(event,${f.id})" data-id="${f.id}">
           <div class="cov-wrap">
             <img class="covr" src="${f.cover||''}" loading="lazy">
-            <div class="cov-ov"><div class="playbtn">▶</div></div>
+            <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
             <div class="bulk-check" id="chk-${f.id}" onclick="event.stopPropagation();toggleBulkSelect(${f.id})"></div>
             ${progBar}
-            <div class="cfav" onclick="event.stopPropagation();removeMyListItem(${f.id},${f.inFav})" title="Remove" style="cursor:pointer">✕</div>
-            ${alEntry?.score?`<div class="cscore">★ ${alEntry.score}</div>`:''}
+            <div class="cfav" onclick="event.stopPropagation();removeMyListItem(${f.id},${f.inFav})" title="Remove" style="cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+            ${alEntry?.score?`<div class="cscore">${alEntry.score}</div>`:''}
           </div>
           <div class="cinfo">
             <div class="ctitle">${f.title}</div>
@@ -3263,11 +3222,11 @@ function switchMyListTab(tab){
 
 // ─── Inline category popover for My List cards ────────────────────────────
 const _CAT_OPTS=[
-  ['CURRENT',  '▶','Watching',     'var(--accent2)'],
-  ['COMPLETED','✓','Completed',    'var(--green)'],
-  ['PLANNING', '⊕','Planning',     'var(--gold)'],
-  ['PAUSED',   '⏸','On Hold',      '#888'],
-  ['DROPPED',  '✕','Dropped',      'var(--red)'],
+  ['CURRENT',  '','Watching',     'var(--accent2)'],
+  ['COMPLETED','','Completed',    'var(--green)'],
+  ['PLANNING', '','Planning',     'var(--gold)'],
+  ['PAUSED',   '','On Hold',      '#888'],
+  ['DROPPED',  '','Dropped',      'var(--red)'],
 ];
 function openScorePop(e,id){
   document.getElementById('score-pop')?.remove();
@@ -3290,7 +3249,7 @@ function setAnimeScore(id,score){
   if(S.alToken) syncToAL(id,S.alListCache[id].status||'PLANNING',S.alListCache[id].progress||0,score).catch(()=>{});
   // Update score pill in DOM without full re-render
   const card=document.querySelector(`.acard[data-id="${id}"] .score-pill`);
-  if(card) card.textContent=score?`★ ${score}`:'☆';
+  if(card) card.textContent=score?`${score}`:'';
   toast(score?`Score set to ${score}`:'Score cleared','ok');
 }
 function openCatPop(e,id,title){
@@ -3373,9 +3332,9 @@ function applyMyListFilter(){
     const progBar=alEntry?.progress&&f.total?`<div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(0,0,0,.5)"><div style="height:100%;width:${Math.min((alEntry.progress/f.total)*100,100)}%;background:#fff;border-radius:2px"></div></div>`:'';
     return `<div class="acard" onclick="go('anime',{id:${f.id}})">
       <div class="cov-wrap"><img class="covr" src="${f.cover||''}" loading="lazy">
-      <div class="cov-ov"><div class="playbtn">▶</div></div>${statusDot}${progBar}
-      <div class="cfav" onclick="event.stopPropagation();removeMyListItem(${f.id},${f.inFav})" title="Remove" style="cursor:pointer">✕</div>
-      ${alEntry?.score?`<div class="cscore">★ ${alEntry.score}</div>`:''}
+      <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>${statusDot}${progBar}
+      <div class="cfav" onclick="event.stopPropagation();removeMyListItem(${f.id},${f.inFav})" title="Remove" style="cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+      ${alEntry?.score?`<div class="cscore">${alEntry.score}</div>`:''}
       </div>
       <div class="cinfo"><div class="ctitle">${f.title}</div>
       <div class="csub">${alEntry?.progress?`Ep ${alEntry.progress}${f.total?'/'+f.total:''}`:''}</div></div>
@@ -3425,7 +3384,7 @@ async function renderDetail(m){
             <div class="dgenres">${(a.genres||[]).slice(0,6).map(g=>`<span class="dtag" onclick="event.stopPropagation();go('search',{q:'${g}'})">${g}</span>`).join('')}</div>
             <h1 class="dtitle">${t}</h1>
             <div class="dstats">
-              ${s?`<div class="dstat">★ <span class="dval" style="color:var(--gold)">${s}</span></div>`:''}
+              ${s?`<div class="dstat"><span class="dval" style="color:var(--gold)">${s}</span></div>`:''}
               <div class="dstat"><span class="dval">${totalEps} eps</span></div>
               <div class="dstat"><span class="dval">${studio}</span></div>
               <div class="dstat"><span class="dval">${a.seasonYear||'TBA'}</span></div>
@@ -3437,11 +3396,11 @@ async function renderDetail(m){
             <div class="dbtns">
               <button class="btn-p" onclick="go('watch',{id:${a.id},ep:'${resumeEp}'})">${histEntry&&histEntry.ep>1?`Resume Ep ${resumeEp}`:`Watch Ep 1`}</button>
               <button class="btn-s ${faved?'active':''}" id="fav-btn" onclick="${faved?`toggleFav(${a.id},'${t.replace(/'/g,"\\'")}','${cv}')`:`addToListWithCategory(${a.id},'${t.replace(/'/g,"\\'")}','${cv}')`}">
-                ${faved?'♥ In List':'♡ My List'}
+                ${faved?'In List':'My List'}
               </button>
               <button class="btn-s" id="al-status-dot" onclick="openStatusPicker(${a.id},'${t.replace(/'/g,"\\'")}')"
                 style="display:flex;align-items:center;gap:6px;${S.alListCache[a.id]?.status?'border-color:'+({'CURRENT':'var(--accent2)','COMPLETED':'var(--green)','PLANNING':'var(--gold)','PAUSED':'#888','DROPPED':'var(--red)'}[S.alListCache[a.id].status]||'var(--border)')+';color:'+({'CURRENT':'var(--accent2)','COMPLETED':'var(--green)','PLANNING':'var(--gold)','PAUSED':'#888','DROPPED':'var(--red)'}[S.alListCache[a.id].status]||'inherit'):''}">
-                <span style="font-size:12px">${S.alListCache[a.id]?.status?{'CURRENT':'▶','COMPLETED':'✓','PLANNING':'⊕','PAUSED':'⏸','DROPPED':'✕'}[S.alListCache[a.id].status]||'⊕':'⊕'}</span>
+                <span style="font-size:12px">${S.alListCache[a.id]?.status?({'CURRENT':'',  'COMPLETED':'','PLANNING':'',  'PAUSED':'',  'DROPPED':''}[S.alListCache[a.id].status]||''):''}  </span>
                 <span>${S.alListCache[a.id]?.status?{'CURRENT':'Watching','COMPLETED':'Completed','PLANNING':'Planning','PAUSED':'On Hold','DROPPED':'Dropped'}[S.alListCache[a.id].status]||'Category':'Category'}</span>
               </button>
               <button class="btn-s" onclick="addToQueue(${a.id},'${t.replace(/'/g,"\\'")}','${cv}')" title="Add to watch queue">+ Queue</button>
@@ -3465,7 +3424,7 @@ async function renderDetail(m){
               </div>
               <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Your Rating</div>
               <div style="display:flex;gap:2px;align-items:center">
-                ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<span class="rating-star${(S.alListCache[a.id]?.score||0)>=n?' lit':''}" data-n="${n}" onclick="rateAnime(${a.id},${n})" onmouseover="previewRating(${n})" onmouseout="resetRating(${S.alListCache[a.id]?.score||0})">★</span>`).join('')}
+                ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<span class="rating-dot${(S.alListCache[a.id]?.score||0)>=n?' lit':''}" data-n="${n}" onclick="rateAnime(${a.id},${n})" onmouseover="previewRating(${n})" onmouseout="resetRating(${S.alListCache[a.id]?.score||0})">★</span>`).join('')}
                 <span style="font-size:12px;color:var(--text2);margin-left:8px">${S.alListCache[a.id]?.score?`${S.alListCache[a.id].score}/10`:''}</span>
               </div>
             </div>`:''}
@@ -3492,7 +3451,7 @@ async function renderDetail(m){
                 <div class="epm">${a.duration?a.duration+'m':''}</div>
               </div>
               <div class="ep-chk ${wasWatched(a.id,ep)?'done':''}" title="Mark watched"
-                onclick="event.stopPropagation();toggleEpWatched(${a.id},${ep},this)">${wasWatched(a.id,ep)?'✓':''}</div>
+                onclick="event.stopPropagation();toggleEpWatched(${a.id},${ep},this)"></div>
             </div>`).join('')}
         </div>
       </div>
@@ -3520,7 +3479,7 @@ async function renderDetail(m){
               <div class="acard" onclick="go('anime',{id:${r.node.id}})">
                 <div class="cov-wrap">
                   <img class="covr" src="${r.node.coverImage?.large||''}" loading="lazy">
-                  <div class="cov-ov"><div class="playbtn">▶</div></div>
+                  <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
                   <div class="cbadge">${r.relationType}</div>
                 </div>
                 <div class="cinfo"><div class="ctitle">${r.node.title?.romaji||''}</div></div>
@@ -3538,8 +3497,8 @@ async function renderDetail(m){
               <div class="acard" onclick="go('anime',{id:${r.id}})">
                 <div class="cov-wrap">
                   <img class="covr" src="${r.coverImage?.large||''}" loading="lazy">
-                  <div class="cov-ov"><div class="playbtn">▶</div></div>
-                  ${r.averageScore?`<div class="cscore">★ ${(r.averageScore/10).toFixed(1)}</div>`:''}
+                  <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+                  ${r.averageScore?`<div class="cscore">${(r.averageScore/10).toFixed(1)}</div>`:''}
                 </div>
                 <div class="cinfo"><div class="ctitle">${r.title?.userPreferred||r.title?.romaji||''}</div></div>
               </div>
@@ -3560,10 +3519,10 @@ async function renderDetail(m){
   }
   }catch(e){
     m.innerHTML=`<div style="padding:100px 20px;text-align:center;color:var(--text2)">
-      <div style="font-size:32px;margin-bottom:12px">⚠</div>
+      <div style="font-size:32px;margin-bottom:12px;opacity:.3"><svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
       <div style="font-size:15px;margin-bottom:8px">Failed to load anime</div>
       <div style="font-size:12px;margin-bottom:20px">${e.message}</div>
-      <button class="btn-s" onclick="renderDetail(document.getElementById('main'))" style="font-size:12px;padding:8px 18px">↻ Retry</button>
+      <button class="btn-s" onclick="renderDetail(document.getElementById('main'))" style="font-size:12px;padding:8px 18px">Retry</button>
     </div>`;
     toast('Failed to load anime','err');
   }
@@ -3597,7 +3556,7 @@ function toggleEpWatched(animeId,ep,chkEl){
     document.getElementById('epc-'+ep)?.classList.remove('watched');
   } else {
     S.watched[animeId].push(ep);
-    chkEl.classList.add('done');chkEl.textContent='✓';
+    chkEl.classList.add('done');chkEl.textContent='';
     document.getElementById('epc-'+ep)?.classList.add('watched');
   }
   setLS('aniWatched',S.watched);
@@ -3653,7 +3612,6 @@ async function renderWatch(m){
 
     m.innerHTML=`
     <div class="page watchpage">
-      <div class="backlink" onclick="go('anime',{id:${anime.id}})">← ${t}</div>
       <div class="wlayout">
         <div>
           <div class="pwrap" id="pwrap">
@@ -3670,8 +3628,6 @@ async function renderWatch(m){
             <div class="cp-subs-overlay" id="cp-subs-overlay"></div>
             <!-- Custom Player UI -->
             <div class="cp-ui" id="cp-ui">
-              <!-- Tap dismiss layer — catches taps on empty player area -->
-              <div class="cp-dismiss" onclick="cpDismissOrToggle(event)"></div>
               <!-- Gesture overlays -->
               <div class="gest-bright" id="gest-bright">BR 100%</div>
               <div class="gest-vol" id="gest-vol">VOL 100%</div>
@@ -3815,16 +3771,12 @@ async function renderWatch(m){
                 <button class="tg ${S.subType==='sub'?'on':''}" id="sub-tg" onclick="switchSD('sub')">SUB</button>
                 <button class="tg ${S.subType==='dub'?'on':''}" id="dub-tg" onclick="switchSD('dub')">DUB</button>
               </div>
-              ${epNum>1?`<button class="btn-s" onclick="go('watch',{id:${anime.id},ep:'${epNum-1}'})" style="font-size:11px;padding:5px 12px">← Prev</button>`:''}
-              ${epNum<totalEps?`<button class="btn-s" onclick="go('watch',{id:${anime.id},ep:'${epNum+1}'})" style="font-size:11px;padding:5px 12px">Next →</button>`:''}
-              <button class="btn-s wuth-btn" onclick="watchedUpToHere(${anime.id},${epNum})" title="Mark all episodes up to this one as watched">✓ Watched up to here</button>
+              ${epNum>1?`<button class="btn-s" onclick="go('watch',{id:${anime.id},ep:'${epNum-1}'})" style="font-size:11px;padding:5px 10px">Prev</button>`:''}
+              ${epNum<totalEps?`<button class="btn-s" onclick="go('watch',{id:${anime.id},ep:'${epNum+1}'})" style="font-size:11px;padding:5px 10px">Next</button>`:''}
+              <button class="btn-s wuth-btn" onclick="watchedUpToHere(${anime.id},${epNum})" style="font-size:11px;padding:5px 10px">Watched to here</button>
             </div>
             <div class="svrs" id="svrs"><span style="font-size:12px;color:var(--text2)">Loading servers...</span></div>
-            <div style="margin-top:12px">
-              <div style="font-size:11px;color:var(--text2);margin-bottom:5px">My notes for this episode</div>
-              <textarea class="notes-area" placeholder="Your thoughts on this episode..." rows="2"
-                oninput="saveNote('${anime.id}_ep${epNum}',this.value)">${getNote(`${anime.id}_ep${epNum}`)}</textarea>
-            </div>
+
           </div>
         </div>
         <div class="sibebar">
@@ -3847,9 +3799,7 @@ async function renderWatch(m){
                    onclick="go('watch',{id:${anime.id},ep:'${ep}'})">
                 <div class="sibepn">${ep}</div>
                 <div class="sibept">Episode ${ep}</div>
-                <div style="margin-left:auto;display:flex;align-items:center;gap:6px;flex-shrink:0;">
-                  ${watched?`<div class="sibep-check">✓</div>`:(pct>0?`<div style="font-size:10px;color:var(--text2);font-weight:500">${pct}%</div>`:'')}
-                </div>
+                ${watched?`<div class="sibep-check"></div>`:(pct>0?`<div style="font-size:10px;color:var(--text2)">${pct}%</div>`:'')}
                 ${pct>0&&!watched?`<div class="sibep-prog" id="sibep-prog-${ep}" style="width:${pct}%"></div>`:''}
               </div>`;
             }).join('')}
@@ -3931,19 +3881,6 @@ function cpShowUI(){
   }
 }
 function cpStopIdleTimer(){clearTimeout(_cpIdleTimer);}
-function cpDismissOrToggle(e){
-  // Tapping empty player space: if UI visible → hide; if hidden → show
-  const ui=document.getElementById('cp-ui');
-  const pw=document.getElementById('pwrap');
-  if(!ui) return;
-  if(ui.classList.contains('show')){
-    ui.classList.remove('show');
-    pw?.classList.remove('cp-show');
-    clearTimeout(_cpIdleTimer);
-  } else {
-    cpShowUI();
-  }
-}
 
 // ─── Init – wire up all custom player events ───
 function cpInitEvents(vid){
@@ -3973,27 +3910,22 @@ function cpInitEvents(vid){
   // ── Idle / mouse events
   pw.addEventListener('mousemove',cpShowUI);
   pw.addEventListener('mouseenter',cpShowUI);
-  // Track whether UI was visible BEFORE this touch — used by click handler
-  // to skip play/pause toggle when the tap is just revealing the UI.
-  let _tapRevealedUI=false;
-  pw.addEventListener('touchstart',()=>{
-    const u=document.getElementById('cp-ui');
-    _tapRevealedUI=!(u&&(u.classList.contains('show')||u.classList.contains('paused')));
+  let _tapRevealedUI = false;
+  pw.addEventListener('touchstart', () => {
+    const u = document.getElementById('cp-ui');
+    _tapRevealedUI = u ? !(u.classList.contains('show') || u.classList.contains('paused')) : false;
     cpShowUI();
-  },{passive:true});
+  }, {passive: true});
   pw.addEventListener('mouseleave',()=>{
     const v=document.getElementById('vid');
     if(v&&!v.paused) ui.classList.remove('show');
   });
 
-  // ── Click centre: only toggle play/pause if UI was already visible before tap ──
-  // If _tapRevealedUI is true, this click just revealed the UI — don't also pause.
-  pw.addEventListener('click',e=>{
-    // Ignore clicks from control elements
-    if(e.target.closest('.cp-bot,.cp-top,.cp-overflow-pop,.cp-sub-ctrl-panel,.cp-share-toast,.cp-seek-tip,.cp-dbl-zone')) return;
-    if(e.target.closest('#cp-next-btn,#cp-prev-btn,.cp-navbtn,.cp-skip-recap,.cp-skip-pill,.cp-embed-bar')) return;
-    // If this tap just revealed the UI, don't also toggle play/pause
-    if(_tapRevealedUI){ _tapRevealedUI=false; return; }
+  // ── Click: play/pause — skip if this tap just revealed the UI
+  pw.addEventListener('click', e => {
+    if(e.target.closest('.cp-bot,.cp-top,.cp-overflow-pop,.cp-sub-ctrl-panel,.cp-seek-tip,.cp-dbl-zone,.cp-embed-bar')) return;
+    if(e.target.closest('#cp-next-btn,#cp-prev-btn,.cp-navbtn,.cp-skip-recap,.cp-skip-pill')) return;
+    if(_tapRevealedUI){_tapRevealedUI=false;return;}
     _tapRevealedUI=false;
     if(vid.paused||vid.ended) vid.play().catch(()=>{}); else vid.pause();
   });
@@ -4135,27 +4067,20 @@ function cpTogglePlay(){
   vid.paused?vid.play().catch(()=>{}):vid.pause();
 }
 
-// ─── Center click: tap toggles UI; if paused and UI already visible, also plays ───
+// ─── Center tap — instant hide/show UI ───
 let _cpClickTimer=null;
 function cpCenterClick(e){
   if(e.target.closest('.cp-dbl-zone')) return;
-  clearTimeout(_cpClickTimer);
-  _cpClickTimer=setTimeout(()=>{
-    const ui=document.getElementById('cp-ui');
-    const pw=document.getElementById('pwrap');
-    const vid=document.getElementById('vid');
-    const uiVisible=ui&&ui.classList.contains('show');
-    if(uiVisible){
-      // UI is visible → hide it
-      ui.classList.remove('show');
-      pw?.classList.remove('cp-show');
-      clearTimeout(_cpIdleTimer);
-    } else {
-      // UI hidden → show it (and if paused, play)
-      cpShowUI();
-      if(vid&&vid.paused&&!vid.ended) vid.play().catch(()=>{});
-    }
-  },200);
+  const ui=document.getElementById('cp-ui');
+  const pw=document.getElementById('pwrap');
+  if(!ui) return;
+  if(ui.classList.contains('show')){
+    ui.classList.remove('show');
+    pw?.classList.remove('cp-show');
+    clearTimeout(_cpIdleTimer);
+  } else {
+    cpShowUI();
+  }
 }
 
 // ─── Skip ───
@@ -4583,7 +4508,7 @@ function _refreshBulkChecks(){
   document.querySelectorAll('.bulk-check').forEach(el=>{
     const id=parseInt(el.id.replace('chk-',''));
     el.classList.toggle('sel',_bulkSelected.has(id));
-    el.textContent=_bulkSelected.has(id)?'✓':'';
+    el.textContent='';
   });
 }
 function toggleBulkSelect(id){
@@ -4591,7 +4516,7 @@ function toggleBulkSelect(id){
   else _bulkSelected.add(id);
   _updateBulkCount();
   const chk=document.getElementById('chk-'+id);
-  if(chk){ chk.classList.toggle('sel',_bulkSelected.has(id)); chk.textContent=_bulkSelected.has(id)?'✓':''; }
+  if(chk){ chk.classList.toggle('sel',_bulkSelected.has(id)); chk.textContent=''; }
 }
 function mlCardClick(event,id){
   if(document.body.classList.contains('bulk-mode')){ toggleBulkSelect(id); return; }
@@ -4641,7 +4566,7 @@ async function _loadNewThisWeek(){
       const badge=ep?`<span class="new-ep-badge">EP ${ep}</span>`:'';
       return `<div class="acard" onclick="go('anime',{id:${a.id}})" style="flex-shrink:0">
         <div class="cov-wrap"><img class="covr" src="${a.coverImage?.large||''}" loading="lazy">
-          <div class="cov-ov"><div class="playbtn">▶</div></div>
+          <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
           ${badge?`<div style="position:absolute;bottom:5px;left:5px">${badge}</div>`:''}
         </div>
         <div class="cinfo"><div class="ctitle">${a.title?.romaji||''}</div></div>
@@ -4695,8 +4620,8 @@ async function _forYouLoad(genre){
     row.innerHTML=`<div class="arow" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:4px">`+items.map(a=>`
       <div class="acard" onclick="go('anime',{id:${a.id}})" style="flex-shrink:0">
         <div class="cov-wrap"><img class="covr" src="${a.coverImage?.large||''}" loading="lazy">
-          <div class="cov-ov"><div class="playbtn">▶</div></div>
-          ${a.averageScore?`<div class="cscore">★ ${(a.averageScore/10).toFixed(1)}</div>`:''}
+          <div class="cov-ov"><div class="playbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+          ${a.averageScore?`<div class="cscore">${(a.averageScore/10).toFixed(1)}</div>`:''}
         </div>
         <div class="cinfo"><div class="ctitle">${a.title?.romaji||''}</div></div>
       </div>`).join('')+'</div>';
@@ -4767,21 +4692,33 @@ function toggleFs(){
 // ─── Next episode overlay ───
 let _nextCancelled=false;
 function startNextOverlay(totalEps,epNum,animeId){
-  if(_nextCancelled) return; // user cancelled for this episode — wait until next episode
+  if(_nextCancelled) return;
   if(!S.settings.autoNext||epNum>=totalEps) return;
   const ov=document.getElementById('next-overlay');
-  if(!ov||ov.classList.contains('show')) return; // already showing — don't reset countdown
+  if(!ov||ov.classList.contains('show')) return;
   const prog=document.getElementById('next-progress');
-  if(ov) ov.classList.add('show');
+  ov.classList.add('show');
+  // Update "Up Next" ep number
+  const nextEpEl=ov.querySelector('.next-ep');
+  if(nextEpEl) nextEpEl.textContent='Episode '+(epNum+1);
   let pct=0;
   if(S.nextTimer) clearInterval(S.nextTimer);
+  // 5 second countdown (50ms intervals × 100 steps)
   S.nextTimer=setInterval(()=>{
-    if(_nextCancelled){clearInterval(S.nextTimer);return;}
-    pct+=100/100; // 10s countdown at 100ms intervals
-    if(prog) prog.style.width=`${Math.min(pct,100)}%`;
+    if(_nextCancelled){clearInterval(S.nextTimer);ov.classList.remove('show');return;}
+    pct+=2; // 2% per 100ms = 5 seconds
+    if(prog) prog.style.width=Math.min(pct,100)+'%';
     if(pct>=100){
       clearInterval(S.nextTimer);
-      if(!_nextCancelled) go('watch',{id:animeId,ep:String(epNum+1)});
+      if(!_nextCancelled){
+        ov.classList.remove('show');
+        // Use in-player switch (no page reload) if on same anime, else navigate
+        if(S.currentAnime?.id===animeId){
+          switchEpisodeInPlayer(epNum+1);
+        } else {
+          go('watch',{id:animeId,ep:String(epNum+1)});
+        }
+      }
     }
   },100);
 }
@@ -5178,19 +5115,19 @@ function showCardSheet(id,title,cover){
     </div>
     <div class="sheet-actions">
       <div class="sheet-action" onclick="this.closest('.card-sheet').parentElement.remove();go('watch',{id:${id},ep:'1'})">
-        <span class="sa-icon">▶</span>Watch
+        Watch
       </div>
       <div class="sheet-action" onclick="this.closest('.card-sheet').parentElement.remove();go('anime',{id:${id}})">
         <span class="sa-icon">ℹ</span>Info
       </div>
       <div class="sheet-action" onclick="toggleFav(${id},'${title.replace(/'/g,"\\'")}','${cover}');this.closest('.card-sheet').parentElement.remove()">
-        <span class="sa-icon">${faved?'♥':'♡'}</span>${faved?'Remove':'My List'}
+        ${faved?'Remove':'My List'}
       </div>
       <div class="sheet-action" onclick="addToQueue(${id},'${title.replace(/'/g,"\\'")}','${cover}');this.closest('.card-sheet').parentElement.remove()">
-        <span class="sa-icon">${queued?'✓':'+'}</span>${queued?'Queued':'Queue'}
+        ${queued?'Queued':'+ Queue'}
       </div>
       <div class="sheet-action" onclick="this.closest('.card-sheet').parentElement.remove()">
-        <span class="sa-icon">✕</span>Close
+        Close
       </div>
     </div>
   </div>`;
@@ -5332,7 +5269,7 @@ async function importMALXML(file){
     S.favorites=S.favorites.slice(0,500);
     S.history=S.history.slice(0,50);
     setLS('aniFavs',S.favorites); setLS('aniHistory',S.history); setLS('aniALList',S.alListCache);
-    if(statusEl) statusEl.textContent=`✓ Imported ${resolved}/${entries.length}`;
+    if(statusEl) statusEl.textContent=`Imported ${resolved}/${entries.length}`;
     toast(`MAL import: ${resolved}/${entries.length} anime`,'ok');
   }catch(err){
     if(statusEl) statusEl.textContent='❌ '+err.message;
@@ -5429,9 +5366,9 @@ async function exportAniListXML(){
 
     const matched=Object.keys(malIdMap).length;
     const s=expStatus();
-    if(s) s.textContent=`✓ Done — ${matched}/${alIds.length} matched with MAL IDs. Download started.`;
+    if(s) s.textContent=`Done — ${matched}/${alIds.length} matched. Download started.`;
     setTimeout(closeModal,2200);
-    toast(`✓ Export ready — ${matched} MAL IDs resolved`,'ok');
+    toast(`Export ready — ${matched} MAL IDs resolved`,'ok');
   }catch(err){
     toast('Export failed: '+err.message,'err');
     console.error('[ALExport]',err);
@@ -5663,7 +5600,7 @@ function watchedUpToHere(animeId,ep){
     if(epNum&&epNum<=ep){
       el.classList.add('watched');
       const chk=el.querySelector('.ep-chk');
-      if(chk){chk.classList.add('done');chk.textContent='✓';}
+      if(chk){chk.classList.add('done');chk.textContent='';}
     }
   });
   toast(`Marked episodes 1–${ep} as watched`,'ok');
@@ -5672,7 +5609,7 @@ function watchedUpToHere(animeId,ep){
 
 // ─── Schedule page ────────────────────────────────────────────────────────
 async function renderSchedule(m){
-  m.innerHTML=`<div class="page spage"><div class="sqtitle">📅 Airing Schedule</div><div id="sched-cont">${skels(8)}</div></div>`;
+  m.innerHTML=`<div class="page spage"><div class="sqtitle">Airing Schedule</div><div id="sched-cont">${skels(8)}</div></div>`;
   try{
     // Use FRAG (global fragment) — fragment must be prepended to query
     const query=`${FRAG} query{Page(page:1,perPage:50){media(status:RELEASING,type:ANIME,sort:TRENDING_DESC,isAdult:false){...MF}}}`;
@@ -5776,7 +5713,7 @@ const ALL_GENRES=['Action','Adventure','Comedy','Drama','Ecchi','Fantasy','Horro
 async function renderGenreExplorer(m){
   m.innerHTML=`
   <div class="page spage">
-    <div class="sqtitle">🎭 Browse by Genre</div>
+    <div class="sqtitle">Browse by Genre</div>
     <div class="genre-bar" style="margin-bottom:24px">
       ${ALL_GENRES.map(g=>`<div class="genre-chip" onclick="renderGenreResults('${g}')">${g}</div>`).join('')}
     </div>
@@ -5793,6 +5730,37 @@ async function renderGenreResults(genre){
     const list=data?.Page?.media||[];
     el.innerHTML=`<div style="font-size:14px;font-weight:600;margin-bottom:14px">${genre} <span style="color:var(--text2);font-size:12px">${list.length} results</span></div><div class="agrid">${list.map(a=>cardHTML(a)).join('')}</div>`;
   }catch{el.innerHTML='<div style="color:var(--text2)">Failed to load</div>';}
+}
+
+// ─── HLS factory — shared config + fast-seek handler ─────────────────────────
+// stopLoad() cancels any in-flight segment fetch; startLoad(t) tells HLS.js
+// exactly where to resume — without stopLoad() first, startLoad() is a no-op.
+function makeHls(vid, extraCfg){
+  const cfg=Object.assign({
+    maxBufferLength:30,
+    maxMaxBufferLength:60,
+    backBufferLength:10,
+    enableWorker:true,
+    startFragPrefetch:false,
+  },extraCfg||{});
+  const hls=new Hls(cfg);
+  window._hls=hls;
+  // Fast-seek: fires once after user settles on a new position
+  const onSeeked=()=>{
+    if(window._hls!==hls) return; // stale if source switched
+    const t=vid.currentTime;
+    const buf=vid.buffered;
+    let inBuf=false;
+    for(let i=0;i<buf.length;i++){
+      if(t>=buf.start(i)-0.5&&t<=buf.end(i)+0.5){inBuf=true;break;}
+    }
+    if(!inBuf){hls.stopLoad();hls.startLoad(t);}
+  };
+  vid.addEventListener('seeked',onSeeked,{passive:true});
+  // Clean up listener when this hls instance is destroyed
+  const _destroy=hls.destroy.bind(hls);
+  hls.destroy=()=>{vid.removeEventListener('seeked',onSeeked);_destroy();};
+  return hls;
 }
 
 // ─── Client-side m3u8 proxy fallback ─────────────────────────────────────
@@ -5846,13 +5814,13 @@ async function loadSrcClientProxy(rawUrl,referer,vid,idx,proxyCfgs){
   }
   const blob=new Blob([finalText],{type:'application/vnd.apple.mpegurl'});
   const blobUrl=URL.createObjectURL(blob);
-  const hlsCfg={maxBufferLength:30,enableWorker:true};
+  const xhrCfg={};
   if(usedProxyCfg.supportsHeaders){
-    hlsCfg.xhrSetup=(xhr)=>{
+    xhrCfg.xhrSetup=(xhr)=>{
       try{xhr.setRequestHeader('x-cors-headers',JSON.stringify({Referer:referer,'User-Agent':'Mozilla/5.0'}));}catch{}
     };
   }
-  const hls=new Hls(hlsCfg);window._hls=hls;
+  const hls=makeHls(vid,xhrCfg);
   hls.loadSource(blobUrl);hls.attachMedia(vid);
   hls.on(Hls.Events.MANIFEST_PARSED,()=>{URL.revokeObjectURL(blobUrl);showPlayer();});
   hls.on(Hls.Events.ERROR,(_,d)=>{
@@ -5892,21 +5860,14 @@ async function loadSources(anime,epNum,subType){
       : '';
     const eBtns=embeds.map((e,i)=>`<button class="svr" data-emb="${i}" onclick="loadEmbed(${i})">${e.name}</button>`).join('');
     svrs.innerHTML=`
-      <div class="svrs-section">
-        <div class="svrs-section-head">
-          <span class="svrs-row-label">DIRECT</span>
-          ${qBtns ? '<span class="svrs-badge svrs-badge-live">LIVE</span>' : ''}
-        </div>
-        <div class="svrs-row">
-          ${qBtns||'<span style="font-size:11px;color:var(--text2);padding:2px 0">Not available</span>'}
-        </div>
+      <div class="svrs-row">
+        <span class="svrs-row-label">Direct</span>
+        ${qBtns||'<span style="font-size:11px;color:var(--text2)">None found</span>'}
       </div>
       <div class="svrs-divider"></div>
-      <div class="svrs-section">
-        <div class="svrs-section-head">
-          <span class="svrs-row-label">EMBEDS</span>
-        </div>
-        <div class="svrs-row">${eBtns}</div>
+      <div class="svrs-row">
+        <span class="svrs-row-label">Embeds</span>
+        ${eBtns}
       </div>`;
   };
 
@@ -6119,21 +6080,22 @@ function loadSrc(idx){
     vid.querySelectorAll('track').forEach(t=>t.remove());
     // Build sub menu and auto-load subtitle overlay
     cpBuildSubMenu(vid);
-    // Resume: wait for canplay then show resume toast if >3s in
+    // Auto-resume: silently seek to saved timestamp on canplay
     if(S.settings.resumePlay&&anime){
       const ts=getTimestamp(anime.id,epNum);
       if(ts>3){
         vid.addEventListener('canplay',()=>{
           if(!vid.duration||!isFinite(vid.duration)||ts>=vid.duration-5) return;
-          // Show resume toast instead of silently jumping
+          vid.currentTime=ts;
+          // Show a brief non-blocking toast so user knows we resumed
           const rt=document.getElementById('resume-toast');
           const rtTs=document.getElementById('resume-ts');
           if(rt&&rtTs){
             rtTs.textContent=cpFmt(ts);
             rt.style.display='flex';
             window._resumeTarget=ts;
-            // Auto-dismiss after 6s if user doesn't tap
-            setTimeout(()=>{if(rt) rt.style.display='none';},6000);
+            // Auto-dismiss after 3s
+            setTimeout(()=>{if(rt) rt.style.display='none';},3000);
           }
         },{once:true});
       }
@@ -6188,8 +6150,7 @@ function loadSrc(idx){
     // No client-side CORS proxy or header injection needed — safe for Capacitor iOS/Android.
     if(src.isProxied){
       if(typeof Hls!=='undefined'&&Hls.isSupported()){
-        const hls=new Hls({maxBufferLength:30,enableWorker:true});
-        window._hls=hls;
+        const hls=makeHls(vid);
         hls.loadSource(rawUrl);
         hls.attachMedia(vid);
         hls.on(Hls.Events.MANIFEST_PARSED,()=>showPlayer());
@@ -6226,8 +6187,7 @@ function loadSrc(idx){
       // so hls.js never makes direct CDN requests (prevents 403/CORS failures).
       const referer=(S.currentHeaders?.Referer||S.currentHeaders?.referer||'https://megacloud.tv/');
       const m3u8Src=getApiUrl()+'/api/proxy/m3u8?url='+encodeURIComponent(rawUrl)+'&referer='+encodeURIComponent(referer);
-      const hls=new Hls({maxBufferLength:30,enableWorker:true});
-      window._hls=hls;
+      const hls=makeHls(vid);
       hls.loadSource(m3u8Src);
       hls.attachMedia(vid);
       hls.on(Hls.Events.MANIFEST_PARSED,()=>showPlayer());
@@ -6289,7 +6249,7 @@ function openImport(){
   mr.innerHTML=`
   <div class="modal-bg" onclick="closeModal(event)">
     <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <div class="modal-title">Import List</div>
       <div class="modal-sub">Import from AniList or MyAnimeList</div>
 
@@ -6399,7 +6359,7 @@ async function importAniList(){
     }
     const lbl={CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped',REPEATING:'Rewatching'};
     const summary=Object.entries(counts).map(([s,c])=>`${c} ${lbl[s]||s}`).join(', ');
-    toast(`✓ Imported ${imported} anime — ${summary}`,'ok');
+    toast(`Imported ${imported} anime — ${summary}`,'ok');
     closeModal();
   }catch(e){
     toast('Import failed: '+e.message,'err');
@@ -6415,6 +6375,21 @@ function handleMalDrop(e){
   if(file) parseMalXML(file);
 }
 
+// Hidden file input at body level for Android WebView compatibility
+(function(){
+  if(document.getElementById('_malXmlInput')) return;
+  const inp=document.createElement('input');
+  inp.type='file'; inp.id='_malXmlInput'; inp.accept='.xml,text/xml,application/xml';
+  inp.style.cssText='position:fixed;left:-9999px;top:-9999px;opacity:0;pointer-events:none;';
+  inp.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f)parseMalXML(f);inp.value='';});
+  document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(inp),{once:true});
+  if(document.body) document.body.appendChild(inp);
+})();
+function _triggerMalXMLPicker(){
+  const inp=document.getElementById('_malXmlInput');
+  if(inp){inp.click();}
+  else{const f=document.createElement('input');f.type='file';f.accept='.xml,text/xml';f.onchange=e=>{if(e.target.files[0])parseMalXML(e.target.files[0]);};document.body.appendChild(f);f.click();setTimeout(()=>f.remove(),60000);}
+}
 function parseMalXML(file){
   if(!file){return;}
   const status=document.getElementById('mal-status');
@@ -6570,8 +6545,8 @@ function parseMalXML(file){
         for(const e of Object.values(S.alListCache)) counts[e.status]=(counts[e.status]||0)+1;
         const summary=Object.entries(counts).map(([s,c])=>`${c} ${lbl[s]||s}`).join(', ');
         const notFound=total-resolved;
-        setStatus(`✓ Done — ${resolved}/${total} matched${notFound?` · ${notFound} not found`:''} · ${summary}`);
-        toast(`✓ Imported ${resolved} from MAL — ${summary}`,'ok');
+        setStatus(`Done — ${resolved}/${total} matched${notFound?` · ${notFound} not found`:''} · ${summary}`);
+        toast(`Imported ${resolved} from MAL — ${summary}`,'ok');
 
         // ── Show unmatched titles list ────────────────────────────────────────
         if(unmatchedTitles.length>0){
@@ -6586,7 +6561,7 @@ function parseMalXML(file){
           listDiv.innerHTML=`
             <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;gap:8px;">
               <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
-                <span style="font-size:15px;flex-shrink:0">⚠️</span>
+                <span style="font-size:15px;flex-shrink:0;opacity:.6">!</span>
                 <span style="font-size:13px;font-weight:600;color:var(--red);white-space:nowrap">${unmatchedTitles.length} not found</span>
               </div>
               <div style="display:flex;gap:6px;flex-shrink:0;">
@@ -6638,12 +6613,12 @@ function parseMalXML(file){
               if(!S.favorites.find(f=>f.id===found.id)) S.favorites.push({id:found.id,title,cover,ts:Date.now()});
               setLS('aniFavs',S.favorites);setLS('aniALList',S.alListCache);
               if(S.alToken) syncToAL(found.id,'PLANNING',0).catch(()=>{});
-              if(iconEl){iconEl.textContent='✓';iconEl.style.color='var(--green)';}
-              if(addBtn){addBtn.textContent='✓';addBtn.style.color='var(--green)';}
+              if(iconEl){iconEl.textContent='';iconEl.style.color='var(--green)';}
+              if(addBtn){addBtn.textContent='';addBtn.style.color='var(--green)';}
               toast(`Added "${title}" to Planning`,'ok');
             } else {
-              if(iconEl){iconEl.textContent='✕';iconEl.style.color='var(--red)';}
-              if(addBtn){addBtn.disabled=false;addBtn.textContent='⊕';}
+              if(iconEl){iconEl.textContent='✗';iconEl.style.color='var(--red)';}
+              if(addBtn){addBtn.disabled=false;addBtn.textContent='';}
               toast(`Could not find "${rawTitle}" on AniList`,'err');
             }
           };
@@ -6709,8 +6684,8 @@ function parseMalXML(file){
                 saveEntry(found,t);
                 const iconEl=document.getElementById(`${uid}-icon-${i}`);
                 const addBtn=document.getElementById(`${uid}-add-${i}`);
-                if(iconEl){iconEl.textContent='✓';iconEl.style.color='var(--green)';}
-                if(addBtn){addBtn.textContent='✓';addBtn.style.color='var(--green)';}
+                if(iconEl){iconEl.textContent='';iconEl.style.color='var(--green)';}
+                if(addBtn){addBtn.textContent='';addBtn.style.color='var(--green)';}
                 addedCount++;
               }
             }
@@ -6731,8 +6706,8 @@ function parseMalXML(file){
                   saveEntry(m,t);
                   const iconEl=document.getElementById(`${uid}-icon-${i}`);
                   const addBtn=document.getElementById(`${uid}-add-${i}`);
-                  if(iconEl){iconEl.textContent='✓';iconEl.style.color='var(--green)';}
-                  if(addBtn){addBtn.textContent='✓';addBtn.style.color='var(--green)';}
+                  if(iconEl){iconEl.textContent='';iconEl.style.color='var(--green)';}
+                  if(addBtn){addBtn.textContent='';addBtn.style.color='var(--green)';}
                   addedCount++;
                 }
               });
@@ -6757,8 +6732,8 @@ function parseMalXML(file){
               }
               if(found){
                 saveEntry(found,t);
-                if(iconEl){iconEl.textContent='✓';iconEl.style.color='var(--green)';}
-                if(addBtn){addBtn.textContent='✓';addBtn.style.color='var(--green)';}
+                if(iconEl){iconEl.textContent='';iconEl.style.color='var(--green)';}
+                if(addBtn){addBtn.textContent='';addBtn.style.color='var(--green)';}
                 addedCount++;
               }
               await new Promise(r=>setTimeout(r,600));
@@ -6767,7 +6742,7 @@ function parseMalXML(file){
             setLS('aniFavs',S.favorites);setLS('aniALList',S.alListCache);
             const stillMissed=pending.length-addedCount;
             if(progressEl) progressEl.textContent=`✓ Done — ${addedCount}/${pending.length} added${stillMissed?` · ${stillMissed} still not found`:''}`;
-            if(addbtn){addbtn.textContent=`✓ ${addedCount} Added`;addbtn.style.color='var(--green)';}
+            if(addbtn){addbtn.textContent=`${addedCount} Added`;addbtn.style.color='var(--green)';}
             toast(`Bulk add: ${addedCount}/${pending.length} added`,'ok');
           };
         } else {
@@ -6822,11 +6797,11 @@ function renderSettingsPage(m){
           <div class="sp-account-avatar"><img src="${alUser.avatar?.large||''}" alt="${alUser.name}"></div>
           <div style="flex:1;min-width:0">
             <div style="font-size:15px;font-weight:700">${alUser.name}</div>
-            <div style="font-size:12px;color:var(--green);margin-top:2px">✓ AniList connected</div>
+            <div style="font-size:12px;color:var(--green);margin-top:2px">Connected</div>
             <div style="font-size:11px;color:var(--text2);margin-top:1px">${Object.keys(S.alListCache).length} anime synced</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="btn-s" onclick="fetchALUserList().then(()=>{toast('Synced ✓','ok');go('settings');})" style="font-size:11px;padding:6px 12px">⇄ Pull</button>
+            <button class="btn-s" onclick="fetchALUserList().then(()=>{toast('Synced','ok');go('settings');})" style="font-size:11px;padding:6px 12px">Pull</button>
             <button class="btn-s" onclick="_confirmLogoutAL()" style="font-size:11px;padding:6px 12px;color:var(--red);border-color:rgba(248,113,113,.3)">Logout</button>
           </div>
         </div>
@@ -6847,20 +6822,31 @@ function renderSettingsPage(m){
       </div>
 
       <!-- Playback & Display -->
+      <!-- Theme toggle row -->
+      <div class="sp-row" onclick="toggleTheme();go('settings')">
+        <div class="sp-row-icon" style="background:rgba(127,140,255,.18)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(127,140,255,.9)"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+        </div>
+        <div class="sp-row-text">
+          <div class="sp-row-label">Theme</div>
+          <div class="sp-row-sub" id="theme-sub-label">${document.body.classList.contains('light-theme')?'Light':'Dark'}</div>
+        </div>
+        <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
+      </div>
       <div class="sp-section-label">Playback & Display</div>
       <div class="sp-group">
         <div class="sp-row" onclick="_settingsOpenPlayback()">
-          <div class="sp-row-icon" style="background:rgba(99,102,241,.18)">▶</div>
+          <div class="sp-row-icon" style="background:rgba(99,102,241,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(130,120,255,.9)"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Playback</div><div class="sp-row-sub">Auto-play, resume, skip intro/outro</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
         </div>
         <div class="sp-row" onclick="_settingsOpenLanguage()">
-          <div class="sp-row-icon" style="background:rgba(16,185,129,.18)">言</div>
+          <div class="sp-row-icon" style="background:rgba(16,185,129,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(16,185,129,.9)"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Default language</div></div>
           <div class="sp-row-right"><span style="font-size:12px;font-weight:600;color:var(--accent)">${subVal}</span><span class="sp-row-chevron">›</span></div>
         </div>
         <div class="sp-row" onclick="_settingsOpenAppearance()">
-          <div class="sp-row-icon" style="background:rgba(245,158,11,.18)">🎨</div>
+          <div class="sp-row-icon" style="background:rgba(245,158,11,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(245,158,11,.9)"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Appearance</div><div class="sp-row-sub">Accent color, font size, compact cards</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
         </div>
@@ -6870,17 +6856,17 @@ function renderSettingsPage(m){
       <div class="sp-section-label">Data & Sync</div>
       <div class="sp-group">
         <div class="sp-row" onclick="_settingsOpenImport()">
-          <div class="sp-row-icon" style="background:rgba(59,130,246,.18)">↕</div>
+          <div class="sp-row-icon" style="background:rgba(59,130,246,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(59,130,246,.9)"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Import / Export</div><div class="sp-row-sub">AniList, MAL XML, JSON backup</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
         </div>
         <div class="sp-row" onclick="_settingsOpenAPI()">
-          <div class="sp-row-icon" style="background:rgba(139,92,246,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4 2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(139,92,246,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(139,92,246,.9)"><path d="M19.59 7L12 14.59 6.41 9H11V7H3v8h2v-4.59l7 7 9-9-1.41-1.41z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Stream API</div><div class="sp-row-sub">Self-host or use default server</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
         </div>
         <div class="sp-row" onclick="_settingsOpenNotif()">
-          <div class="sp-row-icon" style="background:rgba(236,72,153,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(236,72,153,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(236,72,153,.9)"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Notifications</div></div>
           <div class="sp-row-right"><span style="font-size:12px;font-weight:600;color:${notifOn?'var(--green)':'var(--text2)'}">${notifOn?'On':'Off'}</span><span class="sp-row-chevron">›</span></div>
         </div>
@@ -6890,7 +6876,7 @@ function renderSettingsPage(m){
       <div class="sp-section-label">Stats</div>
       <div class="sp-group">
         <div class="sp-row" onclick="_settingsOpenStats()">
-          <div class="sp-row-icon" style="background:rgba(244,185,66,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(244,185,66,.18)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(244,185,66,.9)"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label">Your stats</div><div class="sp-row-sub">${Object.keys(S.watched).length} anime · ${Object.values(S.watched).reduce((a,e)=>a+e.length,0)} episodes · ${safeLS('aniStreak',{count:0}).count} day streak</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron">›</span></div>
         </div>
@@ -6900,22 +6886,22 @@ function renderSettingsPage(m){
       <div class="sp-section-label" style="color:var(--red)">Data Management</div>
       <div class="sp-group">
         <div class="sp-row" onclick="clearList('history')">
-          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(248,113,113,.8)"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label" style="color:var(--red)">Clear watch history</div><div class="sp-row-sub">${S.history.length} items</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron" style="color:rgba(248,113,113,.5)">›</span></div>
         </div>
         <div class="sp-row" onclick="clearList('favorites')">
-          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(248,113,113,.8)"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label" style="color:var(--red)">Clear My List</div><div class="sp-row-sub">${S.favorites.length} items</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron" style="color:rgba(248,113,113,.5)">›</span></div>
         </div>
         <div class="sp-row" onclick="clearList('all')">
-          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(248,113,113,.8)"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label" style="color:var(--red)">Clear everything</div><div class="sp-row-sub">Wipes all lists, history &amp; watch data</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron" style="color:rgba(248,113,113,.5)">›</span></div>
         </div>
         <div class="sp-row" onclick="_clearSlugCache()">
-          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+          <div class="sp-row-icon" style="background:rgba(248,113,113,.12)"><svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(248,113,113,.8)"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></div>
           <div class="sp-row-text"><div class="sp-row-label" style="color:var(--red)">Clear stream cache</div><div class="sp-row-sub">Re-resolve HiAnime links on next play</div></div>
           <div class="sp-row-right"><span class="sp-row-chevron" style="color:rgba(248,113,113,.5)">›</span></div>
         </div>
@@ -6931,7 +6917,7 @@ function _settingsSubModal(title, bodyHTML){
   mr.innerHTML=`
   <div class="modal-bg" onclick="closeModal(event)">
     <div class="modal" style="max-width:460px">
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
       <div class="modal-title" style="font-size:18px;margin-bottom:18px">${title}</div>
       ${bodyHTML}
     </div>
@@ -7001,10 +6987,10 @@ function _settingsOpenImport(){
   _settingsSubModal('Import / Export',`
     <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Use <strong>Export for AniList</strong> to import into anilist.co — fetches real MAL IDs so statuses sync correctly.</div>
     <div style="display:flex;flex-direction:column;gap:8px">
-      <button class="btn-s" onclick="openImport()" style="justify-content:center;padding:11px;font-size:13px">↑ Import List</button>
-      <button class="btn-p" onclick="closeModal();exportAniListXML()" style="justify-content:center;padding:11px;font-size:13px">↓ Export for AniList</button>
-      <button class="btn-s" onclick="exportList()" style="justify-content:center;padding:11px;font-size:13px">↓ Backup JSON</button>
-      <label class="btn-s" style="justify-content:center;padding:11px;font-size:13px;cursor:pointer">↑ Import MAL XML<input type="file" accept=".xml" style="display:none" onchange="importMALXML(this.files[0])"></label>
+      <button class="btn-s" onclick="openImport()" style="justify-content:center;padding:11px;font-size:13px">Import List</button>
+      <button class="btn-p" onclick="closeModal();exportAniListXML()" style="justify-content:center;padding:11px;font-size:13px">Export for AniList</button>
+      <button class="btn-s" onclick="exportList()" style="justify-content:center;padding:11px;font-size:13px">Backup JSON</button>
+      <label class="btn-s" style="justify-content:center;padding:11px;font-size:13px;cursor:pointer">Import MAL XML<input type="file" accept=".xml" style="display:none" onchange="importMALXML(this.files[0])"></label>
     </div>`);
 }
 
@@ -7013,17 +6999,12 @@ function _settingsOpenAPI(){
   const _savedUrl=(s.apiUrl||'').trim();
   const _isLocalhost=/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/.test(_savedUrl);
   const _isNullOrigin=window.location.origin==='null';
-  const _isChromeBrowser = _isChrome();
   const _pnaBanner=(_isLocalhost&&_isNullOrigin)
-    ? `<div style="margin-bottom:12px;padding:10px 12px;background:rgba(244,185,66,.07);border:1px solid rgba(244,185,66,.25);border-radius:8px;font-size:11px;line-height:1.8;color:var(--text1)">
-        <div style="font-weight:700;color:var(--gold);margin-bottom:4px">${_isChromeBrowser ? 'Chrome blocks localhost API' : 'Browser blocks localhost API'}</div>
-        ${_isChromeBrowser ? `
-        <b>Option 1 — Disable the block (one-time):</b><br>
-        <span style="user-select:all;color:var(--green);font-family:monospace;font-size:10px;background:var(--bg4);display:block;padding:3px 7px;border-radius:4px;margin:3px 0">chrome://flags/#block-insecure-private-network-requests</span>
-        Set to <b>Disabled</b>, relaunch Chrome.<br><br>
-        <b>Option 2 — Use Lemur Browser</b> (no flag needed).<br><br>
-        ` : ''}
-        <b>Option 3 — Use a public API URL</b> below (Render/Railway/etc).
+    ? `<div style="margin-bottom:12px;padding:10px 12px;background:rgba(244,185,66,.07);border:1px solid rgba(244,185,66,.25);border-radius:8px;font-size:10px;line-height:1.7;color:var(--text1)">
+        <strong style="color:var(--gold)">&#x26A0; Chrome PNA blocks null-origin &#x2192; localhost.</strong><br>
+        Restart Hianime_API in Termux with:<br>
+        <code style="color:var(--green);display:block;background:var(--bg4);padding:4px 8px;border-radius:4px;margin:4px 0;word-break:break-all">CORS_ALLOWED_ORIGINS=* bun run start</code>
+        Or add <code style="color:var(--accent2)">CORS_ALLOWED_ORIGINS=*</code> to <code style="color:var(--accent2)">.env</code> and restart.
       </div>`
     : '';
   _settingsSubModal('Stream API',`
@@ -7055,7 +7036,7 @@ function _settingsOpenStats(){
   const trophies=safeLS('aniTrophies',[]);
   _settingsSubModal('Your Stats',`
     <div class="streak-display" style="margin-bottom:16px">
-      <div><div class="streak-num">${streak.count}</div><div class="streak-lbl">Day streak</div></div>
+      <div><div class="streak-num">${streak.count}</div><div class="streak-lbl">Day streak 🔥</div></div>
       <div style="flex:1"><div style="font-size:13px;font-weight:600;margin-bottom:2px">Keep it going!</div><div style="font-size:11px;color:var(--text2)">Watch something every day</div></div>
     </div>
     <div class="stat-grid">
@@ -7068,7 +7049,7 @@ function _settingsOpenStats(){
 
 function _confirmLogoutAL(){
   const mr=document.getElementById('modal-root');
-  mr.innerHTML=`<div class="modal-bg" onclick="closeModal(event)"><div class="modal" style="max-width:360px"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-title" style="font-size:17px">Disconnect AniList?</div><div class="modal-sub">Your local data stays. You can reconnect anytime.</div><div style="display:flex;gap:10px"><button class="btn-s" onclick="closeModal()" style="flex:1;justify-content:center">Cancel</button><button class="btn-p" onclick="logoutAL();go('settings')" style="flex:1;justify-content:center;background:var(--red);border-color:var(--red)">Disconnect</button></div></div></div>`;
+  mr.innerHTML=`<div class="modal-bg" onclick="closeModal(event)"><div class="modal" style="max-width:360px"><button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><div class="modal-title" style="font-size:17px">Disconnect AniList?</div><div class="modal-sub">Your local data stays. You can reconnect anytime.</div><div style="display:flex;gap:10px"><button class="btn-s" onclick="closeModal()" style="flex:1;justify-content:center">Cancel</button><button class="btn-p" onclick="logoutAL();go('settings')" style="flex:1;justify-content:center;background:var(--red);border-color:var(--red)">Disconnect</button></div></div></div>`;
 }
 
 // Keep openSettings as alias so any remaining calls don't break
@@ -7129,7 +7110,7 @@ async function _pushListToAL(){
           <div class="prog-fill" style="width:${pct}%;border-radius:3px"></div>
         </div>
         <div style="font-size:12px;color:var(--text2);min-height:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-          ${isDone ? '✓ All done!' : (current ? `Syncing: ${current}` : 'Starting…')}
+          ${isDone ? 'Done!' : (current ? `Syncing: ${current}` : 'Starting…')}
         </div>
         ${failed>0 ? `<div style="font-size:12px;color:var(--red);margin-top:8px">⚠ ${failed} entr${failed===1?'y':'ies'} failed</div>` : ''}
         <div style="display:flex;gap:10px;margin-top:18px">
@@ -7292,14 +7273,14 @@ function setAnimeStatus(id,status){
   const dot=document.getElementById('al-status-dot');
   if(dot){
     const STATUS_COLOR={CURRENT:'var(--accent2)',COMPLETED:'var(--green)',PLANNING:'var(--gold)',PAUSED:'#888',DROPPED:'var(--red)'};
-    const STATUS_ICON={CURRENT:'▶',COMPLETED:'✓',PLANNING:'⊕',PAUSED:'⏸',DROPPED:'✕'};
+    const STATUS_ICON={CURRENT:'',COMPLETED:'',PLANNING:'',PAUSED:'',DROPPED:''};
     const AL_STATUS_LABEL={CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped',REPEATING:'Rewatching'};
     const col=STATUS_COLOR[status]||'var(--border)';
     dot.style.borderColor=col;
     dot.style.color=col;
     const iconEl=dot.querySelector('span:first-child');
     const labelEl=dot.querySelector('span:last-child');
-    if(iconEl) iconEl.textContent=STATUS_ICON[status]||'⊕';
+    if(iconEl) iconEl.textContent=STATUS_ICON[status]||'';
     if(labelEl) labelEl.textContent=AL_STATUS_LABEL[status]||status;
   }
 }
@@ -7423,7 +7404,7 @@ function closeModal(e){
 function toast(msg,type='info'){
   const t=document.getElementById('toast');
   const c={info:'var(--accent2)',ok:'var(--green)',err:'var(--red)'};
-  const ic={info:'ℹ',ok:'✓',err:'✗'};
+  const ic={info:'',ok:'',err:''};
   // Remove duplicate toasts with same message
   t.querySelectorAll('.tst').forEach(el=>{if(el.dataset.msg===msg)el.remove();});
   const el=document.createElement('div');
@@ -7562,7 +7543,7 @@ async function shareCardImage(animeId,title,coverUrl,score){
       ctx.fillStyle='#fff';
       ctx.font='bold 13px Outfit,sans-serif';
       ctx.textAlign='center';
-      ctx.fillText('★ '+(score/10).toFixed(1),350,54);
+      ctx.fillText((score/10).toFixed(1),350,54);
     }
     // Title
     ctx.fillStyle='#ffffff';
@@ -7602,7 +7583,7 @@ async function shareCardImage(animeId,title,coverUrl,score){
 function renderHistoryTimeline(m){
   const hist=S.history.slice().reverse();
   if(!hist.length){
-    m.innerHTML='<div class="page spage"><div class="sqtitle">📅 Watch History</div><div style="color:var(--text2);padding:20px;text-align:center">No history yet</div></div>';
+    m.innerHTML='<div class="page spage"><div class="sqtitle">Watch History</div><div style="color:var(--text2);padding:20px;text-align:center">No history yet</div></div>';
     return;
   }
   // Group by date
@@ -7613,7 +7594,7 @@ function renderHistoryTimeline(m){
     byDate[d].push(h);
   }
   m.innerHTML=`<div class="page spage">
-    <div class="sqtitle">📅 Watch History</div>
+    <div class="sqtitle">Watch History</div>
     ${Object.entries(byDate).map(([date,items])=>`
       <div class="sched-day">
         <div class="sched-day-title">${date===new Date().toDateString()?'Today':date}</div>
@@ -7649,7 +7630,7 @@ async function renderNewReleases(m){
           <div class="sched-title">${a.title?.userPreferred||a.title?.romaji||''}</div>
           <div class="sched-ep">${epInfo}</div>
         </div>
-        <div style="font-size:10px;color:var(--gold);text-align:right">★ ${a.averageScore?a.averageScore/10:'?'}</div>
+        <div style="font-size:10px;color:var(--gold);text-align:right">${a.averageScore?a.averageScore/10:'?'}</div>
       </div>`;
     }).join('');
   }catch{ document.getElementById('newrel-cont').innerHTML='<div style="color:var(--text2);padding:20px">Failed to load</div>'; }
@@ -7719,7 +7700,7 @@ async function scheduleAiringNotifs(){
                 icon:'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27%3E%3Crect width=%27192%27 height=%27192%27 rx=%2732%27 fill=%27%23000%27/%3E%3Ctext x=%2750%25%27 y=%2754%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27 font-family=%27sans-serif%27 font-weight=%27900%27 font-size=%27100%27 fill=%27%23fff%27%3ES%3C/text%3E%3C/svg%3E',
                 tag:`swach-${a.id}`,
                 data:{animeId:a.id},
-                actions:[{action:'watch',title:'▶ Watch Now'}],
+                actions:[{action:'watch',title:'Watch Now'}],
               });
             } else {
               new Notification('Swach',{body:`${a.title?.userPreferred} Ep ${a.nextAiringEpisode.episode} is out!`,icon:'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27%3E%3Crect width=%27192%27 height=%27192%27 rx=%2732%27 fill=%27%23000%27/%3E%3Ctext x=%2750%25%27 y=%2754%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27 font-family=%27sans-serif%27 font-weight=%27900%27 font-size=%27100%27 fill=%27%23fff%27%3ES%3C/text%3E%3C/svg%3E'});
@@ -7743,7 +7724,7 @@ function setCompactCards(on){
 // ─── In-player category picker ────────────────────────────────────────────
 function _cpCatIcon(id){
   const s=S.alListCache[id]?.status;
-  return s?({CURRENT:'▶',COMPLETED:'✓',PLANNING:'⊕',PAUSED:'⏸',DROPPED:'✕'}[s]||'⊕'):'⊕';
+  return s?({CURRENT:'',COMPLETED:'',PLANNING:'',PAUSED:'',DROPPED:''}[s]||''):'';
 }
 function openPlayerCategoryPicker(){
   const anime=S.currentAnime;
@@ -7752,11 +7733,11 @@ function openPlayerCategoryPicker(){
   const id=anime.id;
   const cur=S.alListCache[id]?.status||null;
   const opts=[
-    ['CURRENT',  '▶','Watching',    'var(--accent2)'],
-    ['COMPLETED','✓','Completed',   'var(--green)'],
-    ['PLANNING', '⊕','Plan to Watch','var(--gold)'],
-    ['PAUSED',   '⏸','On Hold',     '#888'],
-    ['DROPPED',  '✕','Dropped',     'var(--red)'],
+    ['CURRENT',  '','Watching',    'var(--accent2)'],
+    ['COMPLETED','','Completed',   'var(--green)'],
+    ['PLANNING', '','Plan to Watch','var(--gold)'],
+    ['PAUSED',   '','On Hold',     '#888'],
+    ['DROPPED',  '','Dropped',     'var(--red)'],
   ];
   const div=document.createElement('div');
   div.id='player-cat-picker';
@@ -7772,7 +7753,7 @@ function openPlayerCategoryPicker(){
         ${cur===key?`<span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:${color}"></span>`:''}
       </div>`).join('')}
     ${cur?`<div onclick="playerSetCategory(null)" style="display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;font-size:12px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.07)" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="this.style.color='rgba(255,255,255,.35)'">
-      <span style="width:18px;text-align:center">✕</span> Remove
+      <span style="width:18px;text-align:center">Remove
     </div>`:''}`;
   // Close on outside click
   const close=e=>{if(!div.contains(e.target)){div.remove();document.removeEventListener('click',close,true);}};
@@ -7792,7 +7773,7 @@ function playerSetCategory(status){
     setLS('aniALList',S.alListCache);
     // Update button
     const btn=document.getElementById('cp-cat-btn');
-    if(btn) btn.textContent='⊕';
+    if(btn) btn.textContent='';
     toast('Removed from list','info');
     return;
   }
@@ -7812,10 +7793,10 @@ function playerSetCategory(status){
   setLS('aniALList',S.alListCache);
   if(S.alToken) syncToAL(id,status,S.alListCache[id]?.progress||0).catch(()=>{});
   // Update button icon
-  const iconMap={CURRENT:'▶',COMPLETED:'✓',PLANNING:'⊕',PAUSED:'⏸',DROPPED:'✕'};
+  const iconMap={CURRENT:'',COMPLETED:'',PLANNING:'',PAUSED:'',DROPPED:''};
   const colorMap={CURRENT:'var(--accent2)',COMPLETED:'var(--green)',PLANNING:'var(--gold)',PAUSED:'#888',DROPPED:'var(--red)'};
   const btn=document.getElementById('cp-cat-btn');
-  if(btn){btn.textContent=iconMap[status]||'⊕';btn.style.color=colorMap[status]||'';}
+  if(btn){btn.textContent=iconMap[status]||'';btn.style.color=colorMap[status]||'';}
   const labelMap={CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped'};
   toast(`${labelMap[status]||status}`,'ok');
   // Refresh mylist page if open
@@ -7850,7 +7831,7 @@ function openPlayerEpPicker(){
           <span style="font-size:15px;font-weight:800;min-width:28px;color:${isCur?'#fff':'rgba(255,255,255,.45)'}">${ep}</span>
           <span style="flex:1;font-size:13px;color:${isCur?'#fff':'rgba(255,255,255,.8)'}">Episode ${ep}</span>
           ${isCur?'<span style="font-size:11px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.1);padding:2px 8px;border-radius:10px">Now</span>'
-            :watched?'<span style="color:#34d399;font-size:13px">✓</span>'
+            :watched?'<span style="color:#34d399;font-size:11px">✓</span>'
             :(pct>0?`<span style="font-size:11px;color:rgba(255,255,255,.4)">${pct}%</span>`:'')}
         </div>`;
       }).join('')}
