@@ -1,0 +1,19 @@
+{
+  "name": "anime-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --import tsx/esm server.ts"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "https-proxy-agent": "^8.0.0",
+    "node-fetch": "^3.3.2",
+    "tsx": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3"
+  }
+}
