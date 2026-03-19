@@ -761,8 +761,14 @@ body{
 .lib-actions{display:flex;align-items:center;gap:4px;}
 .lib-icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:transparent;color:var(--text1);cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:background .12s;}
 .lib-icon-btn:active{background:var(--bg2);}
-.lib-filter-bar{display:flex;gap:6px;overflow-x:auto;padding:4px 14px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-shrink:0;}
+.lib-filter-bar{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-shrink:0;}
 .lib-filter-bar::-webkit-scrollbar{display:none}
+.lib-filter-row{display:flex;align-items:center;gap:8px;padding:4px 14px 10px;overflow-x:auto;scrollbar-width:none;}
+.lib-filter-row::-webkit-scrollbar{display:none}
+.lib-active-filter{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg2);border-radius:20px;cursor:pointer;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent;font-size:13px;font-weight:500;color:var(--text0);border:1px solid var(--border);}
+.lib-active-filter:active{background:var(--bg3);}
+.lib-filter-scroll{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+.lib-filter-scroll::-webkit-scrollbar{display:none}
 .lib-chip{padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--text1);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'Sora',sans-serif;transition:all .12s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
 .lib-chip:active{transform:scale(.95);}
 .lib-chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
@@ -3177,11 +3183,18 @@ function renderMyList(m){
       <input id="ml-search" class="inp" placeholder="Search library..." style="margin:0;padding:9px 14px"
         value="${_myListSearch}" oninput="_myListSearch=this.value;clearTimeout(this._t);this._t=setTimeout(()=>applyMyListFilter(),150)">
     </div>
-    <div class="lib-filter-bar">
-      ${tabs.map(([key,label])=>{
-        const cnt=key==='all'?items.length:items.filter(i=>i.status===key).length;
-        return `<button class="lib-chip ${_myListTab===key?'on':''}" onclick="switchMyListTab('${key}')">${label}${cnt?` <span style="font-size:10px;opacity:.7">${cnt}</span>`:''}</button>`;
-      }).join('')}
+    <div class="lib-filter-row">
+      <div class="lib-active-filter" onclick="openLibFilterSheet()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+        <span id="lib-filter-label">${tabs.find(([k])=>k===_myListTab)?.[1]||'All'}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="lib-filter-scroll">
+        ${tabs.slice(1).map(([key,label])=>{
+          const cnt=items.filter(i=>i.status===key).length;
+          return cnt?`<button class="lib-chip ${_myListTab===key?'on':''}" onclick="switchMyListTab('${key}')">${label} <span style="opacity:.6">${cnt}</span></button>`:'';
+        }).join('')}
+      </div>
     </div>
     <div class="sort-bar">
       ${[['title','A-Z'],['score','Score'],['progress','Progress'],['status','Status'],['dateAdded','Date Added']].map(([k,l])=>`
@@ -3232,6 +3245,25 @@ function renderMyList(m){
   </div>`;
 }
 
+function openLibFilterSheet(){
+  const tabs=[['all','All'],['CURRENT','Watching'],['COMPLETED','Completed'],['PLANNING','Planning'],['PAUSED','On Hold'],['DROPPED','Dropped']];
+  const items=window._mlItems||[];
+  const mr=document.getElementById('modal-root');
+  mr.innerHTML=`<div class="modal-bg" onclick="closeModal(event)">
+    <div class="modal" style="max-width:360px">
+      <div class="modal-title" style="font-size:16px;margin-bottom:16px">Filter Library</div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        ${tabs.map(([key,label])=>{
+          const cnt=key==='all'?items.length:items.filter(i=>i.status===key).length;
+          return `<button onclick="switchMyListTab('${key}');closeModal()" style="padding:13px 16px;background:${_myListTab===key?'rgba(127,140,255,.15)':'transparent'};border:1px solid ${_myListTab===key?'var(--accent)':'var(--border)'};border-radius:10px;color:${_myListTab===key?'var(--accent2)':'var(--text0)'};font-size:14px;font-weight:${_myListTab===key?'600':'400'};cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;font-family:'Sora',sans-serif">
+            ${label}
+            <span style="font-size:12px;color:var(--text2)">${cnt}</span>
+          </button>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>`;
+}
 function toggleMLSearch(){
   const row=document.getElementById('ml-search-row');
   if(!row) return;
@@ -3244,6 +3276,10 @@ function toggleMyListView(){
   renderMyList(document.getElementById('main'));
 }
 function switchMyListTab(tab){
+  // Update active filter label
+  const labels={all:'All',CURRENT:'Watching',COMPLETED:'Completed',PLANNING:'Planning',PAUSED:'On Hold',DROPPED:'Dropped'};
+  const lbl=document.getElementById('lib-filter-label');
+  if(lbl) lbl.textContent=labels[tab]||'All';
   _myListTab=tab;
   renderMyList(document.getElementById('main'));
 }
@@ -6302,13 +6338,10 @@ function openImport(){
       <div class="import-section">
         <h3>MyAnimeList (XML)</h3>
         <p>Export from MAL: Profile → Export Anime List, then upload the XML here.</p>
-        <div class="file-drop" id="mal-drop"
-          onclick="_triggerMalXMLPicker()"
-          ondragover="event.preventDefault();this.classList.add('drag')"
-          ondragleave="this.classList.remove('drag')"
-          ondrop="handleMalDrop(event)">
+        <label style="display:block;width:100%;padding:16px;background:var(--bg2);border:1px dashed rgba(255,255,255,.2);border-radius:10px;text-align:center;cursor:pointer;font-size:13px;color:var(--text1);">
           Tap to select MAL XML file
-        </div>
+          <input type="file" accept=".xml,application/xml,text/xml" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" onchange="if(this.files[0])parseMalXML(this.files[0])">
+        </label>
         <div id="mal-status" style="font-size:12px;color:var(--text2);margin-top:8px"></div>
       </div>
 
@@ -7017,7 +7050,10 @@ function _settingsOpenImport(){
       <button class="btn-s" onclick="openImport()" style="justify-content:center;padding:11px;font-size:13px">Import List</button>
       <button class="btn-p" onclick="closeModal();exportAniListXML()" style="justify-content:center;padding:11px;font-size:13px">Export for AniList</button>
       <button class="btn-s" onclick="exportList()" style="justify-content:center;padding:11px;font-size:13px">Backup JSON</button>
-      <button class="btn-s" onclick="_triggerMalXMLPicker()" style="justify-content:center;padding:11px;font-size:13px">Import MAL XML</button>
+      <label class="btn-s" style="justify-content:center;padding:11px;font-size:13px;cursor:pointer;position:relative">
+        Import MAL XML
+        <input type="file" accept=".xml,application/xml,text/xml" style="position:absolute;inset:0;opacity:0;cursor:pointer;" onchange="if(this.files[0])parseMalXML(this.files[0])">
+      </label>
     </div>`);
 }
 
