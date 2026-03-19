@@ -4,13 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.webkit.*
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
@@ -24,46 +26,60 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private var fullscreenView: View? = null
     private var fullscreenCallback: WebChromeClient.CustomViewCallback? = null
+    private val handler = Handler(Looper.getMainLooper())
+
+    // Separate callback for native XML file picker
+    private var xmlPickerCallback: ((String?) -> Unit)? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Edge-to-edge: let the WebView render behind status/nav bars
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        // Dark status bar icons → white (dark background app)
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false
             isAppearanceLightNavigationBars = false
         }
 
-        // Root frame
-        val root = FrameLayout(this)
-        root.setBackgroundColor(Color.BLACK)
+        val root = FrameLayout(this).apply {
+            setBackgroundColor(Color.parseColor("#121212"))
+        }
         setContentView(root)
 
-        // WebView setup
-        webView = WebView(this).apply {
-            layoutParams = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            setBackgroundColor(Color.BLACK)
-        }
+        webView = createWebView()
         root.addView(webView)
 
         configureWebView()
         setupWebClients()
         setupBackHandler()
 
-        // Restore or load initial page
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState)
         } else {
             webView.loadUrl("file:///android_asset/holy.html")
+        }
+    }
+
+    private fun createWebView(): WebView {
+        return WebView(this).apply {
+            layoutParams = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            setBackgroundColor(Color.parseColor("#121212"))
+            overScrollMode = View.OVER_SCROLL_NEVER
+            isScrollbarFadingEnabled = true
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            verticalScrollBarEnabled = false
+            horizontalScrollBarEnabled = false
+            isHapticFeedbackEnabled = true
+            isSoundEffectsEnabled = false
+            isLongClickable = false
+            setLayerType(View.LAYER_TYPE_HARDWARE, null)
         }
     }
 
@@ -75,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             databaseEnabled = true
             allowFileAccess = true
             allowContentAccess = true
-            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // needed for localhost API calls
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             mediaPlaybackRequiresUserGesture = false
             setSupportZoom(false)
             builtInZoomControls = false
@@ -83,64 +99,67 @@ class MainActivity : AppCompatActivity() {
             loadWithOverviewMode = true
             useWideViewPort = true
             cacheMode = WebSettings.LOAD_DEFAULT
-            // Allow video autoplay
             @Suppress("DEPRECATION")
             allowUniversalAccessFromFileURLs = true
+            textZoom = 100
+            minimumFontSize = 1
         }
-        // Hardware acceleration for smooth video
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        // Inject Android bridge
         webView.addJavascriptInterface(AndroidBridge(this), "AndroidBridge")
+    }
+
+    /**
+     * Open a native file picker for XML files and return content to JS.
+     * This is called from AndroidBridge.pickXmlFile().
+     */
+    fun openXmlFilePicker(callback: (String?) -> Unit) {
+        xmlPickerCallback = callback
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "*/*"  // Accept everything — let user pick any file
+            addCategory(Intent.CATEGORY_OPENABLE)
+        }
+        try {
+            startActivityForResult(Intent.createChooser(intent, "Select MAL XML"), XML_PICKER_REQUEST)
+        } catch (e: Exception) {
+            callback(null)
+            xmlPickerCallback = null
+        }
     }
 
     private fun setupWebClients() {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val url = request.url.toString()
-                // Keep in-app: file://, content://, localhost, our asset paths
-                if (url.startsWith("file://") ||
-                    url.startsWith("content://") ||
-                    url.contains("localhost") ||
-                    url.contains("127.0.0.1")) {
-                    return false
-                }
-                // Open external URLs in device browser
-                return try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                    true
-                } catch (e: Exception) {
-                    false
-                }
+                if (url.startsWith("file://") || url.startsWith("content://") ||
+                    url.contains("localhost") || url.contains("127.0.0.1")) return false
+                return try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))); true }
+                catch (e: Exception) { false }
+            }
+
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                injectNativeCSS()
+                injectThemeMode()
             }
 
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
-                // Silently ignore sub-resource errors (fonts, CDN assets, etc.)
-                if (request.isForMainFrame) {
-                    super.onReceivedError(view, request, error)
-                }
+                if (request.isForMainFrame) super.onReceivedError(view, request, error)
             }
         }
 
         webView.webChromeClient = object : WebChromeClient() {
-            // Native fullscreen for video elements
             override fun onShowCustomView(view: View, callback: CustomViewCallback) {
                 fullscreenView = view
                 fullscreenCallback = callback
                 val root = findViewById<FrameLayout>(android.R.id.content)
                 root.addView(view, FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                ))
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
                 webView.visibility = View.GONE
                 enterImmersive()
-                // Lock to landscape in fullscreen
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
             }
 
             override fun onHideCustomView() {
-                fullscreenView?.let {
-                    (it.parent as? ViewGroup)?.removeView(it)
-                }
+                fullscreenView?.let { (it.parent as? ViewGroup)?.removeView(it) }
                 fullscreenView = null
                 fullscreenCallback?.onCustomViewHidden()
                 fullscreenCallback = null
@@ -149,58 +168,50 @@ class MainActivity : AppCompatActivity() {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
 
-            // Allow media file chooser (for import)
-            override fun onShowFileChooser(
-                webView: WebView,
-                filePathCallback: ValueCallback<Array<Uri>>,
-                fileChooserParams: FileChooserParams
-            ): Boolean {
-                val intent = fileChooserParams.createIntent()
+            override fun onShowFileChooser(webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
+                                           fileChooserParams: FileChooserParams): Boolean {
                 return try {
                     filePickerCallback = filePathCallback
-                    startActivityForResult(intent, FILE_CHOOSER_REQUEST)
+                    startActivityForResult(fileChooserParams.createIntent(), FILE_CHOOSER_REQUEST)
                     true
-                } catch (e: Exception) {
-                    filePathCallback.onReceiveValue(null)
-                    false
-                }
+                } catch (e: Exception) { filePathCallback.onReceiveValue(null); false }
             }
 
-            // JS console → Android Logcat
             override fun onConsoleMessage(msg: ConsoleMessage): Boolean {
-                android.util.Log.d("SwachJS",
-                    "[${msg.messageLevel()}] ${msg.message()} (${msg.sourceId()}:${msg.lineNumber()})")
+                android.util.Log.d("SwachJS", "[${msg.messageLevel()}] ${msg.message()}")
                 return true
             }
 
-            // Geolocation (not needed but prevents silent failures)
             override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
                 callback.invoke(origin, false, false)
             }
         }
     }
 
+    private fun injectNativeCSS() {
+        val css = """*{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none!important;outline:none!important;}html,body{overscroll-behavior:none!important;touch-action:pan-y;}input,textarea,[contenteditable]{-webkit-user-select:text!important;user-select:text!important;}.arow,.siblist,.lib-filter-bar,.lib-filter-scroll{-webkit-overflow-scrolling:touch;scroll-behavior:auto!important;}"""
+        webView.evaluateJavascript("""(function(){var s=document.getElementById('_ncss');if(!s){s=document.createElement('style');s.id='_ncss';document.head.appendChild(s);}s.textContent='$css';})();""", null)
+    }
+
+    private fun injectThemeMode() {
+        val isDark = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        webView.evaluateJavascript("if(typeof setNativeTheme==='function')setNativeTheme('${if (isDark) "dark" else "light"}');", null)
+    }
+
     private fun setupBackHandler() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when {
-                    // Exit fullscreen first
-                    fullscreenView != null -> {
-                        webView.webChromeClient?.onHideCustomView()
-                    }
-                    // Let WebView handle back if it can (hash navigation)
-                    webView.canGoBack() -> {
-                        webView.evaluateJavascript(
-                            "typeof navBack === 'function' ? navBack() : null", null)
-                    }
-                    // Otherwise minimize app (don't close — keep scraper running in background)
-                    else -> moveTaskToBack(true)
+                if (fullscreenView != null) {
+                    webView.webChromeClient?.onHideCustomView()
+                } else {
+                    webView.evaluateJavascript(
+                        "typeof navBack==='function'?navBack():'minimize'",
+                        { result -> if (result?.trim('"') == "minimize") moveTaskToBack(true) }
+                    )
                 }
             }
         })
     }
-
-    // ── Immersive mode ────────────────────────────────────────────────────────
 
     private fun enterImmersive() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -213,27 +224,68 @@ class MainActivity : AppCompatActivity() {
     private fun exitImmersive() {
         WindowInsetsControllerCompat(window, window.decorView).apply {
             show(WindowInsetsCompat.Type.systemBars())
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
         }
     }
-
-    // ── File chooser result ───────────────────────────────────────────────────
 
     private var filePickerCallback: ValueCallback<Array<Uri>>? = null
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == FILE_CHOOSER_REQUEST) {
-            filePickerCallback?.onReceiveValue(
-                if (resultCode == Activity.RESULT_OK)
-                    WebChromeClient.FileChooserParams.parseResult(resultCode, data)
-                else null
-            )
-            filePickerCallback = null
+
+        when (requestCode) {
+            FILE_CHOOSER_REQUEST -> {
+                filePickerCallback?.onReceiveValue(
+                    if (resultCode == Activity.RESULT_OK) WebChromeClient.FileChooserParams.parseResult(resultCode, data) else null)
+                filePickerCallback = null
+            }
+            XML_PICKER_REQUEST -> {
+                if (resultCode == Activity.RESULT_OK && data?.data != null) {
+                    val uri = data.data!!
+                    try {
+                        // Read XML content and pass to JS
+                        val inputStream = contentResolver.openInputStream(uri)
+                        val content = inputStream?.bufferedReader()?.use { it.readText() } ?: ""
+                        inputStream?.close()
+                        // Escape for JS string
+                        val escaped = content
+                            .replace("\\", "\\\\")
+                            .replace("'", "\\'")
+                            .replace("\n", "\\n")
+                            .replace("\r", "")
+                        handler.post {
+                            webView.evaluateJavascript(
+                                "if(typeof _onNativeXmlPicked==='function')_onNativeXmlPicked('$escaped');",
+                                null
+                            )
+                        }
+                    } catch (e: Exception) {
+                        handler.post {
+                            webView.evaluateJavascript(
+                                "if(typeof _onNativeXmlPicked==='function')_onNativeXmlPicked(null);",
+                                null
+                            )
+                        }
+                    }
+                } else {
+                    handler.post {
+                        webView.evaluateJavascript(
+                            "if(typeof _onNativeXmlPicked==='function')_onNativeXmlPicked(null);",
+                            null
+                        )
+                    }
+                }
+                xmlPickerCallback = null
+            }
         }
     }
 
-    // ── Lifecycle ─────────────────────────────────────────────────────────────
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        injectThemeMode()
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -243,6 +295,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
+        handler.postDelayed({ injectNativeCSS() }, 400)
     }
 
     override fun onPause() {
@@ -251,11 +304,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        webView.stopLoading()
+        webView.clearHistory()
         webView.destroy()
         super.onDestroy()
     }
 
     companion object {
         private const val FILE_CHOOSER_REQUEST = 1001
+        private const val XML_PICKER_REQUEST = 1002
     }
 }
